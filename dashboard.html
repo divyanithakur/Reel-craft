@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | ReelCraft</title>
+    <meta name="description" content="Manage your ReelCraft projects and create viral Reels with AI.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dashboard-body">
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">ReelCraft</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            </ul>
+            <div class="user-avatar">RC</div>
+        </div>
+    </nav>
+
+    <main class="dashboard-content">
+        <section class="welcome-section section">
+            <div class="container welcome-container">
+                <div class="welcome-left">
+                    <h1>Welcome back, Creator!</h1>
+                    <div class="export-status">
+                        <span class="muted">You have 3 exports remaining this month</span>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="welcome-right">
+                    <button class="btn btn-primary">Create new Reel</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section section">
+            <div class="container stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total Reels made</span>
+                    <span class="stat-value">12</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Exports this month</span>
+                    <span class="stat-value">2 of 5</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Hours saved</span>
+                    <span class="stat-value">8 hrs</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Avg video length</span>
+                    <span class="stat-value">28 sec</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="projects-section section">
+            <div class="container">
+                <h2 class="section-title-left">My recent projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="thumbnail">
+                            <div class="play-icon">
+                                <i data-lucide="play"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Morning routine Reel</h3>
+                            <span class="muted">Edited 2 days ago</span>
+                            <div class="project-actions">
+                                <button class="btn btn-outline btn-sm">Edit</button>
+                                <button class="btn btn-primary btn-sm">Download</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="thumbnail">
+                            <div class="play-icon">
+                                <i data-lucide="play"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Product review video</h3>
+                            <span class="muted">Edited 5 days ago</span>
+                            <div class="project-actions">
+                                <button class="btn btn-outline btn-sm">Edit</button>
+                                <button class="btn btn-primary btn-sm">Download</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="thumbnail">
+                            <div class="play-icon">
+                                <i data-lucide="play"></i>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <h3>Dance transition Reel</h3>
+                            <span class="muted">Edited 1 week ago</span>
+                            <div class="project-actions">
+                                <button class="btn btn-outline btn-sm">Edit</button>
+                                <button class="btn btn-primary btn-sm">Download</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-actions section">
+            <div class="container">
+                <h2 class="section-title-left">Quick actions</h2>
+                <div class="actions-grid">
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i data-lucide="upload"></i>
+                        </div>
+                        <div class="action-text">
+                            <h3>Upload new video</h3>
+                            <span class="muted">Start a new Reel from scratch</span>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i data-lucide="layout"></i>
+                        </div>
+                        <div class="action-text">
+                            <h3>Browse templates</h3>
+                            <span class="muted">Pick a trending Reel format</span>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-icon">
+                            <i data-lucide="music"></i>
+                        </div>
+                        <div class="action-text">
+                            <h3>Trending audio</h3>
+                            <span class="muted">Pick from 30 free sounds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="logo">ReelCraft</div>
+            <p class="footer-msg">Built for small creators. Free to start.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
