@@ -28,7 +28,6 @@
     <main class="section" style="padding-top: 120px; padding-bottom: 80px; min-height: 80vh;">
         <div class="container" style="display: flex; gap: 24px; max-width: 1200px; flex-wrap: wrap;">
             
-            <!-- LEFT COLUMN -->
             <div style="flex: 1 1 60%; display: flex; flex-direction: column; gap: 24px; min-width: 600px;">
                 <div style="background: #16161d; border-radius: 12px; overflow: hidden; border: 1px solid #252531;">
                     <div style="aspect-ratio: 16/9; background: #09090c; display: flex; align-items: center; justify-content: center; position: relative;">
@@ -79,7 +78,6 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN -->
             <div style="flex:0 0 32%;background:#16161d;border:1px solid #252531;border-radius:12px;padding:24px;display:flex;flex-direction:column;min-width:320px;">
                 <style>
                     .tab-btn { padding:12px 16px;color:#7a7890;font-weight:500;cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent; }
@@ -94,7 +92,6 @@
                     <div class="tab-btn" id="btn-export" onclick='showTab("export")'>Export</div>
                 </div>
 
-                <!-- EDIT TAB -->
                 <div id="tab-edit" style="display:none;">
                     <div style="display:flex;flex-direction:column;gap:32px;">
                         <div>
@@ -133,11 +130,11 @@
                     </div>
                 </div>
 
-                <!-- CAPTIONS TAB -->
                 <div id="tab-captions" style="display:none;">
                     <div style="display:flex;flex-direction:column;gap:24px;">
                         <button id="captionBtn" onclick="generateCaptions()" class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;">Generate auto-captions</button>
                         <div id="captionStatus" style="color:#a78bfa;font-size:13px;display:none;text-align:center;">Processing your video...</div>
+                        <div id="captionError" style="color:#e24b4a;font-size:13px;display:none;text-align:center;"></div>
                         <div>
                             <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Caption Text</label>
                             <textarea id="captionText" placeholder="Your captions will appear here after generation" style="width:100%;height:150px;background:#09090c;border:1px solid #252531;border-radius:8px;padding:16px;color:white;resize:none;font-family:inherit;outline:none;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'"></textarea>
@@ -154,7 +151,6 @@
                     </div>
                 </div>
 
-                <!-- AUDIO TAB -->
                 <div id="tab-audio" style="display:none;">
                     <div style="display:flex;flex-direction:column;gap:16px;">
                         <h2 style="font-size:18px;font-weight:700;color:white;">Trending Audio</h2>
@@ -196,7 +192,6 @@
                     </div>
                 </div>
 
-                <!-- EXPORT TAB -->
                 <div id="tab-export" style="display:none;">
                     <div style="display:flex;flex-direction:column;gap:24px;">
                         <h2 style="font-size:18px;font-weight:700;color:white;">Export your Reel</h2>
@@ -281,12 +276,17 @@
             }
             const btn = document.getElementById('captionBtn');
             const status = document.getElementById('captionStatus');
+            const errorDiv = document.getElementById('captionError');
             btn.textContent = 'Generating...';
             btn.disabled = true;
             status.style.display = 'block';
+            errorDiv.style.display = 'none';
 
             try {
                 const ASSEMBLY_KEY = '979f0cedd0074af78aecf192c8d9c002';
+                
+                console.log('Sending video URL to AssemblyAI:', videoUrl);
+                
                 const submitRes = await fetch('https://api.assemblyai.com/v2/transcript', {
                     method: 'POST',
                     headers: {
@@ -295,7 +295,19 @@
                     },
                     body: JSON.stringify({ audio_url: videoUrl })
                 });
+                
                 const submitData = await submitRes.json();
+                console.log('AssemblyAI submit response:', JSON.stringify(submitData));
+                
+                if (!submitData.id) {
+                    btn.textContent = 'Generate auto-captions';
+                    btn.disabled = false;
+                    status.style.display = 'none';
+                    errorDiv.textContent = 'Error: ' + (submitData.error || JSON.stringify(submitData));
+                    errorDiv.style.display = 'block';
+                    return;
+                }
+
                 const transcriptId = submitData.id;
 
                 const pollInterval = setInterval(async () => {
@@ -303,6 +315,7 @@
                         headers: { 'authorization': ASSEMBLY_KEY }
                     });
                     const pollData = await pollRes.json();
+                    console.log('Poll status:', pollData.status);
 
                     if (pollData.status === 'completed') {
                         clearInterval(pollInterval);
@@ -316,7 +329,8 @@
                         btn.textContent = 'Generate auto-captions';
                         btn.disabled = false;
                         status.style.display = 'none';
-                        alert('Error generating captions. Please try again.');
+                        errorDiv.textContent = 'AssemblyAI error: ' + pollData.error;
+                        errorDiv.style.display = 'block';
                     }
                 }, 3000);
 
@@ -324,7 +338,9 @@
                 btn.textContent = 'Generate auto-captions';
                 btn.disabled = false;
                 status.style.display = 'none';
-                alert('Something went wrong: ' + e.message);
+                errorDiv.textContent = 'Something went wrong: ' + e.message;
+                errorDiv.style.display = 'block';
+                console.error('Caption error:', e);
             }
         }
     </script>
