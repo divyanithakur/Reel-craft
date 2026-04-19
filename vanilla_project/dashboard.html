@@ -27,7 +27,7 @@
     </nav>
 
     <main class="dashboard-content">
-        <section class="welcome-section section">
+        <section class="welcome-section section reveal">
             <div class="container welcome-container">
                 <div class="welcome-left">
                     <h1>Welcome back, Creator!</h1>
@@ -44,40 +44,72 @@
             </div>
         </section>
 
-        <section class="stats-section section">
+        <section class="stats-section section reveal">
             <div class="container stats-grid">
                 <div class="stat-card">
-                    <span class="stat-label">Total Reels made</span>
-                    <span class="stat-value">12</span>
+                    <div class="stat-icon-wrapper">
+                        <i data-lucide="video"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Reels made</span>
+                        <span class="stat-value">12</span>
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-label">Exports this month</span>
-                    <span class="stat-value">2 of 5</span>
+                    <div class="stat-icon-wrapper">
+                        <i data-lucide="download"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Exports this month</span>
+                        <span class="stat-value">2 of 5</span>
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-label">Hours saved</span>
-                    <span class="stat-value">8 hrs</span>
+                    <div class="stat-icon-wrapper">
+                        <i data-lucide="clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Hours saved</span>
+                        <span class="stat-value">8 hrs</span>
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-label">Avg video length</span>
-                    <span class="stat-value">28 sec</span>
+                    <div class="stat-icon-wrapper">
+                        <i data-lucide="film"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Avg video length</span>
+                        <span class="stat-value">28 sec</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="projects-section section">
+        <section class="projects-section section reveal">
             <div class="container">
-                <h2 class="section-title-left">My recent projects</h2>
+                <div class="section-header-flex">
+                    <h2 class="section-title-left">My recent projects</h2>
+                    <div class="project-filters">
+                        <button class="filter-btn active">Recent</button>
+                        <button class="filter-btn">Drafts</button>
+                        <button class="filter-btn">Published</button>
+                    </div>
+                </div>
                 <div class="projects-grid">
                     <div class="project-card">
                         <div class="thumbnail">
+                            <span class="duration-badge">0:15</span>
                             <div class="play-icon">
                                 <i data-lucide="play"></i>
                             </div>
                         </div>
                         <div class="project-info">
                             <h3>Morning routine Reel</h3>
-                            <span class="muted">Edited 2 days ago</span>
+                            <div class="project-meta">
+                                <span class="muted">Edited 2 days ago</span>
+                                <span class="dot-separator"></span>
+                                <span class="file-size">12MB</span>
+                            </div>
                             <div class="project-actions">
                                 <button class="btn btn-outline btn-sm">Edit</button>
                                 <button class="btn btn-primary btn-sm">Download</button>
@@ -86,13 +118,18 @@
                     </div>
                     <div class="project-card">
                         <div class="thumbnail">
+                            <span class="duration-badge">0:45</span>
                             <div class="play-icon">
                                 <i data-lucide="play"></i>
                             </div>
                         </div>
                         <div class="project-info">
                             <h3>Product review video</h3>
-                            <span class="muted">Edited 5 days ago</span>
+                            <div class="project-meta">
+                                <span class="muted">Edited 5 days ago</span>
+                                <span class="dot-separator"></span>
+                                <span class="file-size">45MB</span>
+                            </div>
                             <div class="project-actions">
                                 <button class="btn btn-outline btn-sm">Edit</button>
                                 <button class="btn btn-primary btn-sm">Download</button>
@@ -101,13 +138,18 @@
                     </div>
                     <div class="project-card">
                         <div class="thumbnail">
+                            <span class="duration-badge">0:30</span>
                             <div class="play-icon">
                                 <i data-lucide="play"></i>
                             </div>
                         </div>
                         <div class="project-info">
                             <h3>Dance transition Reel</h3>
-                            <span class="muted">Edited 1 week ago</span>
+                            <div class="project-meta">
+                                <span class="muted">Edited 1 week ago</span>
+                                <span class="dot-separator"></span>
+                                <span class="file-size">28MB</span>
+                            </div>
                             <div class="project-actions">
                                 <button class="btn btn-outline btn-sm">Edit</button>
                                 <button class="btn btn-primary btn-sm">Download</button>
@@ -118,7 +160,7 @@
             </div>
         </section>
 
-        <section class="quick-actions section">
+        <section class="quick-actions section reveal">
             <div class="container">
                 <h2 class="section-title-left">Quick actions</h2>
                 <div class="actions-grid">
