@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor | ReelCraft</title>
+    <meta name="description" content="Edit your Reel with AI-powered features.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">ReelCraft</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+            </ul>
+            <a href="upload.html" class="btn btn-primary">Get started free</a>
+        </div>
+    </nav>
+
+    <main class="section" style="padding-top: 120px; padding-bottom: 80px; min-height: 80vh;">
+        <div class="container" style="display: flex; gap: 24px; max-width: 1200px; flex-wrap: wrap;">
+            
+            <!-- LEFT COLUMN (65%) -->
+            <div class="video-preview-col" style="flex: 1 1 60%; display: flex; flex-direction: column; gap: 24px; min-width: 600px;">
+                <!-- Video Box -->
+                <div style="background: #16161d; border-radius: 12px; overflow: hidden; border: 1px solid #252531;">
+                    <div style="aspect-ratio: 16 / 9; background: #09090c; display: flex; align-items: center; justify-content: center; position: relative;">
+                        <!-- Play circle -->
+                        <div style="width: 72px; height: 72px; background: rgba(124, 58, 237, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                            <i data-lucide="play" style="color: white; width: 32px; height: 32px; margin-left: 4px; fill: white;"></i>
+                        </div>
+                        
+                        <!-- Overlay Controls -->
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 24px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);">
+                            <!-- Timeline bar -->
+                            <div style="height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; position: relative; margin-bottom: 16px; cursor: pointer;">
+                                <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 40%; background: #7c3aed; border-radius: 3px;">
+                                    <div style="position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; background: white; border-radius: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>
+                                </div>
+                            </div>
+                            <!-- Controls -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; color: white;">
+                                <div style="display: flex; gap: 24px; align-items: center;">
+                                    <i data-lucide="skip-back" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
+                                    <i data-lucide="play" style="cursor: pointer; width: 24px; height: 24px; fill: white;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"></i>
+                                    <i data-lucide="skip-forward" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
+                                    <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.2); margin: 0 4px;"></div>
+                                    <i data-lucide="volume-2" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 16px;">
+                                    <span style="font-family: monospace; font-size: 13px; opacity: 0.8;">0:06 / 0:15</span>
+                                    <i data-lucide="maximize" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TIMELINE SECTION -->
+                <div style="background: #16161d; border-radius: 12px; border: 1px solid #252531; padding: 24px;">
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <!-- Track 1: Video (Purple) -->
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="width: 60px; color: #7a7890; font-size: 13px; font-weight: 600;">Video</div>
+                            <div style="flex: 1; height: 28px; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #d8b4fe; font-weight: 500; cursor: move;">
+                                raw_footage_01.mp4
+                            </div>
+                        </div>
+                        <!-- Track 2: Audio (Blue) -->
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="width: 60px; color: #7a7890; font-size: 13px; font-weight: 600;">Audio</div>
+                            <div style="flex: 1; height: 28px; background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #bfdbfe; font-weight: 500; cursor: move;">
+                                background_music.wav
+                            </div>
+                        </div>
+                        <!-- Track 3: Text (Green) -->
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="width: 60px; color: #7a7890; font-size: 13px; font-weight: 600;">Text</div>
+                            <div style="flex: 1; display: flex; gap: 8px;">
+                                <div style="width: 30%; height: 28px; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #bbf7d0; font-weight: 500; cursor: move;">Auto-caption #1</div>
+                                <div style="flex: 1; height: 28px; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #bbf7d0; font-weight: 500; cursor: move;">Auto-caption #2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN (35%) -->
+            <div class="tools-panel" style="flex: 0 0 32%; background: #16161d; border: 1px solid #252531; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; min-width: 320px;">
+                <!-- Tabs -->
+                <div style="display: flex; border-bottom: 1px solid #252531; margin-bottom: 24px;">
+                    <div style="padding: 12px 16px; color: #f0eeff; font-weight: 600; border-bottom: 2px solid #7c3aed; cursor: pointer; transition: all 0.2s;">Edit</div>
+                    <div style="padding: 12px 16px; color: #7a7890; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.color='#f0eeff'" onmouseout="this.style.color='#7a7890'">Captions</div>
+                    <div style="padding: 12px 16px; color: #7a7890; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.color='#f0eeff'" onmouseout="this.style.color='#7a7890'">Audio</div>
+                    <div style="padding: 12px 16px; color: #7a7890; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.color='#f0eeff'" onmouseout="this.style.color='#7a7890'">Export</div>
+                </div>
+                
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 32px;">
+                    <!-- Trim -->
+                    <div>
+                        <h3 style="font-size: 14px; color: #7a7890; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 600;">Trim</h3>
+                        <div style="display: flex; gap: 12px;">
+                            <div style="flex: 1;">
+                                <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">Start Time</label>
+                                <input type="text" value="00:00:00" style="width: 100%; background: #09090c; border: 1px solid #252531; border-radius: 6px; padding: 12px; color: white; font-family: monospace; font-size: 14px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
+                            </div>
+                            <div style="flex: 1;">
+                                <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">End Time</label>
+                                <input type="text" value="00:00:15" style="width: 100%; background: #09090c; border: 1px solid #252531; border-radius: 6px; padding: 12px; color: white; font-family: monospace; font-size: 14px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Speed -->
+                    <div>
+                        <h3 style="font-size: 14px; color: #7a7890; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 600;">Speed</h3>
+                        <div style="display: flex; gap: 8px;">
+                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">0.5x</button>
+                            <button style="flex: 1; background: #7c3aed; border: none; color: white; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);">1x</button>
+                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">1.5x</button>
+                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">2x</button>
+                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">3x</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Transitions -->
+                    <div>
+                        <h3 style="font-size: 14px; color: #7a7890; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 600;">Transitions</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                            <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid #7c3aed; color: white; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);">None</div>
+                            <div style="background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">Fade</div>
+                            <div style="background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">Slide</div>
+                            <div style="background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">Zoom</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom button -->
+                <div style="margin-top: 40px; justify-self: flex-end;">
+                    <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">Export Reel</button>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="logo">ReelCraft</div>
+            <p class="footer-msg">Built for small creators. Free to start.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
