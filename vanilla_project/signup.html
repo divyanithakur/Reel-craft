@@ -105,7 +105,7 @@
                 <input type="text" id="name" placeholder="Your full name" class="input-field">
                 <input type="email" id="email" placeholder="Enter your email" class="input-field">
                 <input type="password" id="password" placeholder="Create a password" class="input-field">
-                <button class="btn btn-primary full-width" onclick="handleSignup()">Create free account</button>
+                <button class="btn btn-primary full-width" id="signupBtn">Create free account</button>
                 
                 <div class="divider">
                     <span>or</span>
@@ -132,36 +132,9 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = 'https://uqhsumymxsdzshxhsuma.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxaHN1bXlteHNkenNoeGhzdW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MTM1MzIsImV4cCI6MjA4OTk4OTUzMn0.uoIzMauVrGnNHoysnOD5dK20f0EAFanP9Jcf4GbycK0';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        async function handleSignup() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const name = document.getElementById('name').value;
-            
-            const { error } = await supabase.auth.signUp({
-                email,
-                password,
-                options: {
-                    data: {
-                        full_name: name
-                    }
-                }
-            });
-            
-            if (error) {
-                alert(error.message);
-            } else {
-                alert('Account created! Please check your email to confirm.');
-                window.location.href = 'login.html';
-            }
-        }
-        
-        lucide.createIcons();
+        window.addEventListener('load', function() { const SUPABASE_URL = 'https://uqhsumymxsdzshxhsuma.supabase.co'; const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxaHN1bXlteHNkenNoeGhzdW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MTM1MzIsImV4cCI6MjA4OTk4OTUzMn0.uoIzMauVrGnNHoysnOD5dK20f0EAFanP9Jcf4GbycK0'; const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); document.getElementById('signupBtn').addEventListener('click', async function() { const name = document.getElementById('name').value; const email = document.getElementById('email').value; const password = document.getElementById('password').value; if (!name || !email || !password) { alert('Please fill in all fields'); return; } if (password.length < 6) { alert('Password must be at least 6 characters'); return; } const { data, error } = await client.auth.signUp({ email: email, password: password, options: { data: { full_name: name } } }); if (error) { alert('Error: ' + error.message); } else { alert('Account created successfully! You can now log in.'); window.location.href = 'login.html'; } }); });
     </script>
 </body>
 </html>
