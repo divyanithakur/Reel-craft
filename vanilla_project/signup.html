@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,96 +7,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .auth-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 100px 20px 60px;
-        }
-
-        .auth-card {
-            background: #16161d;
-            border: 1px solid #252531;
-            padding: 40px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 480px;
-            text-align: center;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 14px 16px;
-            background: #0f0f13;
-            border: 1px solid #252531;
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            margin-bottom: 12px;
-            box-sizing: border-box;
-        }
-
-        .input-field:focus {
-            border-color: #7c3aed;
-        }
-
-        .badge-purple {
-            background: rgba(124, 58, 237, 0.1);
-            color: #7c3aed;
-            padding: 6px 16px;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-
-        .auth-footer-text {
-            margin-top: 24px;
-            color: #7a7890;
-            font-size: 0.95rem;
-        }
-
-        .text-purple {
-            color: #7c3aed;
-            text-decoration: none;
-        }
-
-        .signup-btn {
-            width: 100%;
-            padding: 14px;
-            background: #7c3aed;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 4px;
-        }
-
-        .signup-btn:hover {
-            background: #6d28d9;
-        }
-
-        .error-msg {
-            color: #e24b4a;
-            font-size: 0.9rem;
-            margin-top: 8px;
-            display: none;
-        }
-
-        .success-msg {
-            color: #22c55e;
-            font-size: 0.9rem;
-            margin-top: 8px;
-            display: none;
-        }
+        .auth-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 100px 20px 60px; }
+        .auth-card { background: #16161d; border: 1px solid #252531; padding: 40px; border-radius: 20px; width: 100%; max-width: 480px; text-align: center; }
+        .input-field { width: 100%; padding: 14px 16px; background: #0f0f13; border: 1px solid #252531; border-radius: 8px; color: white; font-size: 1rem; outline: none; margin-bottom: 12px; box-sizing: border-box; }
+        .input-field:focus { border-color: #7c3aed; }
+        .badge-purple { background: rgba(124,58,237,0.1); color: #7c3aed; padding: 6px 16px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; display: inline-block; margin-bottom: 1.5rem; }
+        .auth-footer-text { margin-top: 24px; color: #7a7890; font-size: 0.95rem; }
+        .text-purple { color: #7c3aed; text-decoration: none; }
+        .signup-btn { width: 100%; padding: 14px; background: #7c3aed; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 4px; }
+        .signup-btn:hover { background: #6d28d9; }
+        .error-msg { color: #e24b4a; font-size: 0.9rem; margin-top: 8px; display: none; }
+        .success-msg { color: #22c55e; font-size: 0.9rem; margin-top: 8px; display: none; }
     </style>
 </head>
-
 <body>
     <nav class="navbar">
         <div class="container navbar-content">
@@ -157,6 +79,7 @@
             const successMsg = document.getElementById('successMsg');
             errorMsg.style.display = 'none';
             successMsg.style.display = 'none';
+
             if (!name || !email || !password) {
                 errorMsg.textContent = 'Please fill in all fields';
                 errorMsg.style.display = 'block';
@@ -167,21 +90,22 @@
                 errorMsg.style.display = 'block';
                 return;
             }
+
             const { data, error } = await _supabase.auth.signUp({
                 email: email,
                 password: password,
                 options: { data: { full_name: name } }
             });
+
             if (error) {
                 errorMsg.textContent = error.message;
                 errorMsg.style.display = 'block';
             } else {
-                successMsg.textContent = 'Account created! Redirecting to login...';
+                successMsg.textContent = 'Account created! Taking you to the editor...';
                 successMsg.style.display = 'block';
-                setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+                setTimeout(() => { window.location.href = 'upload.html'; }, 2000);
             }
         }
     </script>
 </body>
-
 </html>
