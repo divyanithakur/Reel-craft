@@ -33,13 +33,21 @@
             <h1 style="font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 16px;">Upload your raw video</h1>
             <p class="subtitle" style="margin-bottom: 40px;">Supports MP4, MOV and AVI files up to 500MB. Your video is deleted after download.</p>
             
-            <div class="upload-box" style="border: 2px dashed rgba(124, 58, 237, 0.5); border-radius: 16px; padding: 60px; background: #16161d; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#7c3aed'; this.style.backgroundColor='rgba(124, 58, 237, 0.05)'" onmouseout="this.style.borderColor='rgba(124, 58, 237, 0.5)'; this.style.backgroundColor='#16161d'">
+            <div id="dropZone" class="upload-box" style="border: 2px dashed rgba(124, 58, 237, 0.5); border-radius: 16px; padding: 60px; background: #16161d; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; transition: all 0.3s ease;">
                 <i data-lucide="cloud-upload" style="color: #7c3aed; width: 64px; height: 64px; margin-bottom: 16px;"></i>
                 <div style="color: white; font-size: 20px; font-weight: 700;">Drag and drop your video here</div>
                 <div class="muted" style="color: #7a7890;">or</div>
-                <button onclick="window.location.href='editor.html'" class="btn btn-primary" style="margin-top: 8px;">Browse files from computer</button>
+                <button id="browseBtn" class="btn btn-primary" style="margin-top: 8px;">Browse files from computer</button>
+                <input type="file" id="fileInput" accept="video/*" style="display: none;">
             </div>
             
+            <div id="progressSection" style="display: none; margin-bottom: 24px;">
+                <div style="width: 100%; height: 8px; background: #252531; border-radius: 4px; overflow: hidden; margin-bottom: 8px;">
+                    <div id="progressBar" style="width: 0%; height: 100%; background: #7c3aed; transition: width 0.3s ease;"></div>
+                </div>
+                <div id="statusText" style="color: #7a7890; font-size: 14px;">Uploading... 0%</div>
+            </div>
+
             <div style="color: #7a7890; font-size: 14px; margin-bottom: 40px;">Maximum file size: 500MB</div>
             
             <div class="supported-formats" style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
@@ -70,6 +78,16 @@
 
     <script>
         lucide.createIcons();
+    </script>
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+    <script>
+        const CLOUD_NAME = 'dbtdnh3eh'; const UPLOAD_PRESET = 'reelcraft_videos'; const browseBtn = document.getElementById('browseBtn'); const fileInput = document.getElementById('fileInput'); const dropZone = document.getElementById('dropZone'); const progressSection = document.getElementById('progressSection'); const progressBar = document.getElementById('progressBar'); const statusText = document.getElementById('statusText');
+        browseBtn.addEventListener('click', function() { fileInput.click(); });
+        fileInput.addEventListener('change', function() { if (fileInput.files.length > 0) { uploadFile(fileInput.files[0]); } });
+        dropZone.addEventListener('dragover', function(e) { e.preventDefault(); dropZone.style.borderColor = '#7c3aed'; dropZone.style.background = 'rgba(124,58,237,0.1)'; });
+        dropZone.addEventListener('dragleave', function() { dropZone.style.borderColor = ''; dropZone.style.background = ''; });
+        dropZone.addEventListener('drop', function(e) { e.preventDefault(); dropZone.style.borderColor = ''; dropZone.style.background = ''; if (e.dataTransfer.files.length > 0) { uploadFile(e.dataTransfer.files[0]); } });
+        async function uploadFile(file) { if (!file.type.startsWith('video/')) { alert('Please upload a video file'); return; } if (file.size > 500 * 1024 * 1024) { alert('File size must be under 500MB'); return; } progressSection.style.display = 'block'; statusText.textContent = 'Uploading... 0%'; progressBar.style.width = '0%'; const formData = new FormData(); formData.append('file', file); formData.append('upload_preset', UPLOAD_PRESET); formData.append('cloud_name', CLOUD_NAME); const xhr = new XMLHttpRequest(); xhr.open('POST', 'https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/video/upload'); xhr.upload.onprogress = function(e) { if (e.lengthComputable) { const percent = Math.round((e.loaded / e.total) * 100); progressBar.style.width = percent + '%'; statusText.textContent = 'Uploading... ' + percent + '%'; } }; xhr.onload = function() { if (xhr.status === 200) { const response = JSON.parse(xhr.responseText); statusText.textContent = 'Upload complete! Redirecting to editor...'; progressBar.style.width = '100%'; progressBar.style.background = '#22c55e'; localStorage.setItem('uploadedVideoUrl', response.secure_url); localStorage.setItem('uploadedVideoPublicId', response.public_id); setTimeout(function() { window.location.href = 'editor.html'; }, 1500); } else { statusText.textContent = 'Upload failed. Please try again.'; progressBar.style.background = '#e24b4a'; } }; xhr.onerror = function() { statusText.textContent = 'Upload failed. Please check your connection.'; }; xhr.send(formData); }
     </script>
 </body>
 </html>
