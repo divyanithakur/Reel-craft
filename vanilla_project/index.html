@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -21,9 +20,9 @@
                 <li><a href="index.html#features">Features</a></li>
                 <li><a href="pricing.html">Pricing</a></li>
                 <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="login.html">Log in</a></li>
+                <li><a href="login.html" id="loginLink">Log in</a></li>
             </ul>
-            <a href="signup.html" class="btn btn-primary">Get started free</a>
+            <a href="signup.html" class="btn btn-primary" id="getStartedBtn">Get started free</a>
         </div>
     </nav>
 
@@ -32,10 +31,9 @@
             <h1>Edit raw videos into <span class="text-purple">viral Reels</span> in minutes</h1>
             <p class="subtitle">No editing skills needed. Upload your raw footage and let AI do the heavy lifting.</p>
             <div class="hero-btns">
-                <a href="signup.html" class="btn btn-primary" style="display: inline-flex;">Start editing free</a>
+                <a href="signup.html" class="btn btn-primary" id="startEditingBtn" style="display: inline-flex;">Start editing free</a>
                 <button class="btn btn-outline">See how it works</button>
             </div>
-            
             <div class="editor-preview">
                 <div class="editor-header">
                     <div class="dots">
@@ -71,47 +69,34 @@
             <div class="section-tag">FEATURES</div>
             <h2 class="section-title">Everything a creator needs</h2>
             <p class="section-subtitle">All tools in one place — no app switching</p>
-            
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="icon-box">
-                        <i data-lucide="scissors"></i>
-                    </div>
+                    <div class="icon-box"><i data-lucide="scissors"></i></div>
                     <h3>Auto trim and cut</h3>
                     <p>AI finds your best moments automatically.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon-box">
-                        <i data-lucide="languages"></i>
-                    </div>
+                    <div class="icon-box"><i data-lucide="languages"></i></div>
                     <h3>Auto-captions</h3>
                     <p>Speech to text synced perfectly to audio.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon-box">
-                        <i data-lucide="music"></i>
-                    </div>
+                    <div class="icon-box"><i data-lucide="music"></i></div>
                     <h3>Beat sync</h3>
                     <p>Cuts match your music automatically.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon-box">
-                        <i data-lucide="sparkles"></i>
-                    </div>
+                    <div class="icon-box"><i data-lucide="sparkles"></i></div>
                     <h3>Hook generator</h3>
                     <p>AI writes your perfect first 3 seconds.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon-box">
-                        <i data-lucide="file-text"></i>
-                    </div>
+                    <div class="icon-box"><i data-lucide="file-text"></i></div>
                     <h3>Caption and hashtags</h3>
                     <p>AI writes your Instagram post for you.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="icon-box">
-                        <i data-lucide="download"></i>
-                    </div>
+                    <div class="icon-box"><i data-lucide="download"></i></div>
                     <h3>One-click export</h3>
                     <p>Download for Reels, TikTok and Shorts.</p>
                 </div>
@@ -124,7 +109,6 @@
             <div class="section-tag">HOW IT WORKS</div>
             <h2 class="section-title">3 simple steps</h2>
             <p class="section-subtitle">From raw video to published Reel in under 10 minutes</p>
-            
             <div class="steps-grid">
                 <div class="step-card">
                     <div class="step-number">1</div>
@@ -159,8 +143,25 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
         lucide.createIcons();
+
+        const _client = supabase.createClient(
+            'https://uqhsumymxsdzshxhsuma.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxaHN1bXlteHNkenNoeGhzdW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MTM1MzIsImV4cCI6MjA4OTk4OTUzMn0.uoIzMauVrGnNHoysnOD5dK20f0EAFanP9Jcf4GbycK0'
+        );
+
+        async function checkSession() {
+            const { data } = await _client.auth.getSession();
+            if (data.session) {
+                document.getElementById('getStartedBtn').href = 'upload.html';
+                document.getElementById('startEditingBtn').href = 'upload.html';
+                document.getElementById('loginLink').textContent = 'Dashboard';
+                document.getElementById('loginLink').href = 'dashboard.html';
+            }
+        }
+        checkSession();
     </script>
 </body>
 </html>
