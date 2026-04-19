@@ -9,7 +9,7 @@ export default function UploadPage() {
     <main className="min-h-screen relative flex flex-col">
       <Navbar />
       
-      <section className="flex-1 flex items-center justify-center section pt-32 pb-20">
+      <section className="flex-1 flex items-center justify-center section">
         <div className="container max-w-3xl text-center">
           <div className="reveal">
             <h1 className="mb-4">Upload your <span className="text-purple">raw video</span></h1>

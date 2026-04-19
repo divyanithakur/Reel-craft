@@ -30,22 +30,22 @@ export default function DashboardPage() {
       <Navbar />
       
       <div className="dashboard-content">
-        <section className="welcome-section section reveal py-12">
+        <section className="welcome-section section reveal">
           <div className="container">
-            <div className="welcome-left text-left">
-              <h1 className="text-4xl font-extrabold mb-4">Welcome back, Creator!</h1>
-              <div className="export-status mb-8">
-                <p className="text-zinc-400 mb-2">You have 3 exports remaining this month</p>
-                <div className="progress-container w-64 h-2 bg-zinc-800 rounded-full overflow-hidden">
-                  <div className="progress-bar h-full bg-[#7c3aed]" style={{ width: "40%" }}></div>
-                </div>
-              </div>
+            <div className="welcome-header flex justify-between items-center mb-3">
+              <h1 style={{ fontSize: '36px', fontWeight: '800' }}>Welcome back, Creator!</h1>
               <button className="btn btn-primary">Create new Reel</button>
+            </div>
+            <div className="export-status text-left">
+              <p className="text-zinc-400 mb-2">You have 3 exports remaining this month</p>
+              <div className="progress-container w-64 h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div className="progress-bar h-full bg-[#7c3aed]" style={{ width: "40%" }}></div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="stats-section section reveal" style={{ paddingTop: 0 }}>
+        <section className="stats-section section reveal">
           <div className="container stats-grid">
             {stats.map((s, i) => (
               <div key={i} className="stat-card">
@@ -53,7 +53,7 @@ export default function DashboardPage() {
                   <s.icon size={24} />
                 </div>
                 <div className="stat-info">
-                  <span className="stat-label" style={{ color: "#7a7890", fontSize: "0.85rem" }}>{s.label}</span>
+                  <span className="stat-label">{s.label}</span>
                   <span className="stat-value">{s.value}</span>
                 </div>
               </div>
@@ -63,9 +63,9 @@ export default function DashboardPage() {
 
         <section className="projects-section section reveal">
           <div className="container">
-            <div className="section-header-flex">
-              <h2 className="section-title-left">My recent projects</h2>
-              <div className="project-filters">
+            <div className="section-header flex flex-col items-center justify-center mb-6">
+              <h2 className="section-title text-center">My recent projects</h2>
+              <div className="project-filters flex justify-center mt-4">
                 <button className="filter-btn active">Recent</button>
                 <button className="filter-btn">Drafts</button>
                 <button className="filter-btn">Published</button>
@@ -100,7 +100,7 @@ export default function DashboardPage() {
 
         <section className="quick-actions section reveal">
           <div className="container">
-            <h2 className="section-title-left">Quick actions</h2>
+            <h2 className="section-title text-center">Quick actions</h2>
             <div className="actions-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
               {actions.map((a, i) => (
                 <div key={i} className="action-card">

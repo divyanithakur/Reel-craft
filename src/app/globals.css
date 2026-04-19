@@ -55,20 +55,42 @@ body {
 .container {
   max-width: var(--container-width);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 40px; /* Min 40px left and right padding as per FIX 5 */
   position: relative;
   z-index: 2;
 }
 
 .section {
-  padding: 100px 0;
+  padding: 60px 40px; /* Min 60px top/bottom and 40px left/right as per FIX 5 */
   position: relative;
   z-index: 10;
   background-color: var(--bg-color);
+  text-align: center; /* Section headings and labels must be center aligned as per FIX 5 */
 }
 
 .text-purple {
   color: var(--accent-color);
+}
+
+.section-tag {
+  color: var(--accent-color);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 16px; /* 16px gap as per FIX 1 */
+}
+
+.section-title {
+  font-size: 32px; /* 32px as per FIX 1 */
+  font-weight: 700;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 18px; /* 18px as per FIX 1 */
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 48px;
 }
 
 /* Navbar */
@@ -213,7 +235,7 @@ h1 {
   font-size: clamp(3rem, 6vw, 4.5rem);
   line-height: 1.05;
   font-weight: 800;
-  margin-bottom: 1.5rem;
+  margin-bottom: 16px; /* Min 16px margin below as per FIX 5 */
   letter-spacing: -2px;
 }
 
@@ -355,7 +377,6 @@ h1 {
   padding: 32px;
   border-radius: 20px;
   transition: var(--transition);
-  text-align: left;
 }
 
 .feature-card:hover {
@@ -373,7 +394,7 @@ h1 {
   align-items: center;
   justify-content: center;
   color: var(--accent-color);
-  margin-bottom: 1.5rem;
+  margin: 0 auto 1.5rem;
 }
 
 /* Dashboard */
@@ -413,9 +434,23 @@ h1 {
   justify-content: center;
 }
 
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 13px; /* 13px muted gray per FIX 4 */
+  margin-bottom: 8px; /* 8px gap between label and number per FIX 4 */
+  text-transform: none;
+}
+
 .stat-value {
-  font-size: 1.5rem;
+  font-size: 28px; /* 28px white per FIX 4 */
   font-weight: 800;
+  color: white;
+  line-height: 1;
 }
 
 .projects-grid {
@@ -443,4 +478,59 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* How It Works Section - FIX 2 */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  position: relative;
+  margin-top: 40px;
+}
+
+.steps-grid::before {
+  content: "";
+  position: absolute;
+  top: 30px; /* Center of the 60px circles */
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: rgba(124, 58, 237, 0.2);
+  z-index: 0;
+}
+
+.step-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.step-number {
+  width: 60px;
+  height: 60px;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+}
+
+.step-card h3 {
+  font-size: 18px; /* 18px as per FIX 2 */
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.step-card p {
+  font-size: 14px; /* 14px as per FIX 2 */
+  color: var(--text-muted);
 }
