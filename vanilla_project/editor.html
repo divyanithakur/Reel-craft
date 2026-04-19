@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editor | ReelCraft</title>
-    <meta name="description" content="Edit your Reel with AI-powered features.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -30,302 +28,207 @@
     <main class="section" style="padding-top: 120px; padding-bottom: 80px; min-height: 80vh;">
         <div class="container" style="display: flex; gap: 24px; max-width: 1200px; flex-wrap: wrap;">
             
-            <!-- LEFT COLUMN (65%) -->
-            <div class="video-preview-col" style="flex: 1 1 60%; display: flex; flex-direction: column; gap: 24px; min-width: 600px;">
-                <!-- Video Box -->
+            <!-- LEFT COLUMN -->
+            <div style="flex: 1 1 60%; display: flex; flex-direction: column; gap: 24px; min-width: 600px;">
                 <div style="background: #16161d; border-radius: 12px; overflow: hidden; border: 1px solid #252531;">
-                    <div style="aspect-ratio: 16 / 9; background: #09090c; display: flex; align-items: center; justify-content: center; position: relative;">
-                        <!-- Play circle -->
-                        <video id="previewVideo" controls style="width: 100%; height: 100%; display: none;"></video>
-                        <div id="playPlaceholder" style="width: 72px; height: 72px; background: rgba(124, 58, 237, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                            <i data-lucide="play" style="color: white; width: 32px; height: 32px; margin-left: 4px; fill: white;"></i>
+                    <div style="aspect-ratio: 16/9; background: #09090c; display: flex; align-items: center; justify-content: center; position: relative;">
+                        <video id="previewVideo" controls style="width:100%;height:100%;display:none;"></video>
+                        <div id="playPlaceholder" style="width:72px;height:72px;background:rgba(124,58,237,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                            <i data-lucide="play" style="color:white;width:32px;height:32px;margin-left:4px;fill:white;"></i>
                         </div>
-                        
-                        <!-- Overlay Controls -->
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 24px; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);">
-                            <!-- Timeline bar -->
-                            <div style="height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; position: relative; margin-bottom: 16px; cursor: pointer;">
-                                <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 40%; background: #7c3aed; border-radius: 3px;">
-                                    <div style="position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; background: white; border-radius: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.5);"></div>
+                        <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 24px;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);">
+                            <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;position:relative;margin-bottom:16px;cursor:pointer;">
+                                <div style="position:absolute;left:0;top:0;bottom:0;width:40%;background:#7c3aed;border-radius:3px;">
+                                    <div style="position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:white;border-radius:50%;"></div>
                                 </div>
                             </div>
-                            <!-- Controls -->
-                            <div style="display: flex; justify-content: space-between; align-items: center; color: white;">
-                                <div style="display: flex; gap: 24px; align-items: center;">
-                                    <i data-lucide="skip-back" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
-                                    <i data-lucide="play" style="cursor: pointer; width: 24px; height: 24px; fill: white;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'"></i>
-                                    <i data-lucide="skip-forward" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
-                                    <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.2); margin: 0 4px;"></div>
-                                    <i data-lucide="volume-2" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
+                            <div style="display:flex;justify-content:space-between;align-items:center;color:white;">
+                                <div style="display:flex;gap:24px;align-items:center;">
+                                    <i data-lucide="skip-back" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
+                                    <i data-lucide="play" style="cursor:pointer;width:24px;height:24px;fill:white;"></i>
+                                    <i data-lucide="skip-forward" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
+                                    <i data-lucide="volume-2" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 16px;">
-                                    <span style="font-family: monospace; font-size: 13px; opacity: 0.8;">0:06 / 0:15</span>
-                                    <i data-lucide="maximize" style="cursor: pointer; width: 20px; height: 20px; opacity: 0.8; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'"></i>
+                                <div style="display:flex;align-items:center;gap:16px;">
+                                    <span style="font-family:monospace;font-size:13px;opacity:0.8;">0:06 / 0:15</span>
+                                    <i data-lucide="maximize" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- TIMELINE SECTION -->
-                <div style="background: #16161d; border-radius: 12px; border: 1px solid #252531; padding: 24px;">
-                    <div style="display: flex; flex-direction: column; gap: 16px;">
-                        <!-- Track 1: Video (Purple) -->
-                        <div style="display: flex; align-items: center; gap: 16px;">
-                            <div style="width: 60px; color: #7a7890; font-size: 13px; font-weight: 600;">Video</div>
-                            <div style="flex: 1; height: 28px; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #d8b4fe; font-weight: 500; cursor: move;">
-                                raw_footage_01.mp4
-                            </div>
+
+                <div style="background:#16161d;border-radius:12px;border:1px solid #252531;padding:24px;">
+                    <div style="display:flex;flex-direction:column;gap:16px;">
+                        <div style="display:flex;align-items:center;gap:16px;">
+                            <div style="width:60px;color:#7a7890;font-size:13px;font-weight:600;">Video</div>
+                            <div style="flex:1;height:28px;background:rgba(124,58,237,0.2);border:1px solid #7c3aed;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#d8b4fe;font-weight:500;cursor:move;">raw_footage_01.mp4</div>
                         </div>
-                        <!-- Track 2: Audio (Blue) -->
-                        <div style="display: flex; align-items: center; gap: 16px;">
-                            <div style="width: 60px; color: #7a7890; font-size: 13px; font-weight: 600;">Audio</div>
-                            <div style="flex: 1; height: 28px; background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #bfdbfe; font-weight: 500; cursor: move;">
-                                background_music.wav
-                            </div>
+                        <div style="display:flex;align-items:center;gap:16px;">
+                            <div style="width:60px;color:#7a7890;font-size:13px;font-weight:600;">Audio</div>
+                            <div style="flex:1;height:28px;background:rgba(59,130,246,0.2);border:1px solid #3b82f6;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#bfdbfe;font-weight:500;cursor:move;">background_music.wav</div>
                         </div>
-                        <!-- Track 3: Text (Green) -->
-                        <div style="display: flex; align-items: center; gap: 16px;">
-                            <div style="width: 60px; color: #7a7890; font-size: 13px; font-weight: 600;">Text</div>
-                            <div style="flex: 1; display: flex; gap: 8px;">
-                                <div style="width: 30%; height: 28px; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #bbf7d0; font-weight: 500; cursor: move;">Auto-caption #1</div>
-                                <div style="flex: 1; height: 28px; background: rgba(34, 197, 94, 0.2); border: 1px solid #22c55e; border-radius: 6px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #bbf7d0; font-weight: 500; cursor: move;">Auto-caption #2</div>
+                        <div style="display:flex;align-items:center;gap:16px;">
+                            <div style="width:60px;color:#7a7890;font-size:13px;font-weight:600;">Text</div>
+                            <div style="flex:1;display:flex;gap:8px;">
+                                <div style="width:30%;height:28px;background:rgba(34,197,94,0.2);border:1px solid #22c55e;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#bbf7d0;font-weight:500;cursor:move;">Auto-caption #1</div>
+                                <div style="flex:1;height:28px;background:rgba(34,197,94,0.2);border:1px solid #22c55e;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#bbf7d0;font-weight:500;cursor:move;">Auto-caption #2</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN (35%) -->
-            <div class="tools-panel" style="flex: 0 0 32%; background: #16161d; border: 1px solid #252531; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; min-width: 320px;">
-                
-                <!-- Internal styles for tabs to avoid cluttering global css -->
+            <!-- RIGHT COLUMN -->
+            <div style="flex:0 0 32%;background:#16161d;border:1px solid #252531;border-radius:12px;padding:24px;display:flex;flex-direction:column;min-width:320px;">
                 <style>
-                    .tab-btn {
-                        padding: 12px 16px; 
-                        color: #7a7890; 
-                        font-weight: 500; 
-                        cursor: pointer; 
-                        transition: all 0.2s;
-                        border-bottom: 2px solid transparent;
-                    }
-                    .tab-btn:hover {
-                        color: #f0eeff;
-                    }
-                    .tab-btn.active {
-                        color: #f0eeff;
-                        font-weight: 600;
-                        border-bottom: 2px solid #7c3aed;
-                    }
-                    .tab-panel {
-                        display: none;
-                        flex-direction: column;
-                        gap: 32px;
-                        flex: 1;
-                    }
-                    .tab-panel.active {
-                        display: flex;
-                    }
+                    .tab-btn { padding:12px 16px;color:#7a7890;font-weight:500;cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent; }
+                    .tab-btn:hover { color:#f0eeff; }
+                    .tab-btn.active { color:#f0eeff;font-weight:600;border-bottom:2px solid #7c3aed; }
                 </style>
 
-                <!-- Tabs Header -->
-                <div style="display: flex; border-bottom: 1px solid #252531; margin-bottom: 24px;">
+                <div style="display:flex;border-bottom:1px solid #252531;margin-bottom:24px;">
                     <div class="tab-btn active" id="btn-edit" onclick='showTab("edit")'>Edit</div>
                     <div class="tab-btn" id="btn-captions" onclick='showTab("captions")'>Captions</div>
                     <div class="tab-btn" id="btn-audio" onclick='showTab("audio")'>Audio</div>
                     <div class="tab-btn" id="btn-export" onclick='showTab("export")'>Export</div>
                 </div>
-                
-                <!-- PANEL: EDIT -->
-                <div id="tab-edit" style="display: none;">
-                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
-                    <!-- Trim -->
-                    <div>
-                        <h3 style="font-size: 14px; color: #7a7890; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 600;">Trim</h3>
-                        <div style="display: flex; gap: 12px;">
-                            <div style="flex: 1;">
-                                <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">Start Time</label>
-                                <input type="text" value="00:00:00" style="width: 100%; background: #09090c; border: 1px solid #252531; border-radius: 6px; padding: 12px; color: white; font-family: monospace; font-size: 14px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
-                            </div>
-                            <div style="flex: 1;">
-                                <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">End Time</label>
-                                <input type="text" value="00:00:15" style="width: 100%; background: #09090c; border: 1px solid #252531; border-radius: 6px; padding: 12px; color: white; font-family: monospace; font-size: 14px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Speed -->
-                    <div>
-                        <h3 style="font-size: 14px; color: #7a7890; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 600;">Speed</h3>
-                        <div style="display: flex; gap: 8px;">
-                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">0.5x</button>
-                            <button style="flex: 1; background: #7c3aed; border: none; color: white; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);">1x</button>
-                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">1.5x</button>
-                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">2x</button>
-                            <button style="flex: 1; background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 10px 0; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">3x</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Transitions -->
-                    <div>
-                        <h3 style="font-size: 14px; color: #7a7890; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 600;">Transitions</h3>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                            <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid #7c3aed; color: white; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);">None</div>
-                            <div style="background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">Fade</div>
-                            <div style="background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">Slide</div>
-                            <div style="background: #09090c; border: 1px solid #252531; color: #7a7890; padding: 14px; border-radius: 8px; text-align: center; font-weight: 500; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#7c3aed'; this.style.color='#f0eeff'" onmouseout="this.style.borderColor='#252531'; this.style.color='#7a7890'">Zoom</div>
-                        </div>
-                    </div>
 
-                    <div style="margin-top: auto; padding-top: 40px;">
-                        <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">Export Reel</button>
-                    </div>
+                <!-- EDIT TAB -->
+                <div id="tab-edit" style="display:none;">
+                    <div style="display:flex;flex-direction:column;gap:32px;">
+                        <div>
+                            <h3 style="font-size:14px;color:#7a7890;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;font-weight:600;">Trim</h3>
+                            <div style="display:flex;gap:12px;">
+                                <div style="flex:1;">
+                                    <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Start Time</label>
+                                    <input type="text" value="00:00:00" style="width:100%;background:#09090c;border:1px solid #252531;border-radius:6px;padding:12px;color:white;font-family:monospace;font-size:14px;outline:none;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
+                                </div>
+                                <div style="flex:1;">
+                                    <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">End Time</label>
+                                    <input type="text" value="00:00:15" style="width:100%;background:#09090c;border:1px solid #252531;border-radius:6px;padding:12px;color:white;font-family:monospace;font-size:14px;outline:none;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-size:14px;color:#7a7890;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;font-weight:600;">Speed</h3>
+                            <div style="display:flex;gap:8px;">
+                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">0.5x</button>
+                                <button style="flex:1;background:#7c3aed;border:none;color:white;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">1x</button>
+                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">1.5x</button>
+                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">2x</button>
+                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">3x</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-size:14px;color:#7a7890;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;font-weight:600;">Transitions</h3>
+                            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+                                <div style="background:rgba(124,58,237,0.1);border:1px solid #7c3aed;color:white;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">None</div>
+                                <div style="background:#09090c;border:1px solid #252531;color:#7a7890;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">Fade</div>
+                                <div style="background:#09090c;border:1px solid #252531;color:#7a7890;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">Slide</div>
+                                <div style="background:#09090c;border:1px solid #252531;color:#7a7890;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">Zoom</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;">Export Reel</button>
                     </div>
                 </div>
 
-                <!-- PANEL: CAPTIONS -->
-                <div id="tab-captions" style="display: none;">
-                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
-                    <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">
-                        <i data-lucide="sparkles" style="margin-right: 8px; width: 18px;"></i> Generate auto-captions
-                    </button>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">Caption Text properly synced</label>
-                        <textarea placeholder="Your captions will appear here after generation" style="width: 100%; height: 150px; background: #09090c; border: 1px solid #252531; border-radius: 8px; padding: 16px; color: white; resize: none; font-family: inherit; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'"></textarea>
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">Caption Style</label>
-                        <select style="width: 100%; background: #09090c; border: 1px solid #252531; color: white; padding: 14px; border-radius: 8px; outline: none; appearance: none; cursor: pointer;">
-                            <option>Bold White</option>
-                            <option>Outlined Black</option>
-                            <option>Minimal Gray</option>
-                            <option>Neon Purple</option>
-                        </select>
-                    </div>
+                <!-- CAPTIONS TAB -->
+                <div id="tab-captions" style="display:none;">
+                    <div style="display:flex;flex-direction:column;gap:24px;">
+                        <button id="captionBtn" onclick="generateCaptions()" class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;">Generate auto-captions</button>
+                        <div id="captionStatus" style="color:#a78bfa;font-size:13px;display:none;text-align:center;">Processing your video...</div>
+                        <div>
+                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Caption Text</label>
+                            <textarea id="captionText" placeholder="Your captions will appear here after generation" style="width:100%;height:150px;background:#09090c;border:1px solid #252531;border-radius:8px;padding:16px;color:white;resize:none;font-family:inherit;outline:none;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'"></textarea>
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Caption Style</label>
+                            <select style="width:100%;background:#09090c;border:1px solid #252531;color:white;padding:14px;border-radius:8px;outline:none;cursor:pointer;">
+                                <option>Bold White</option>
+                                <option>Outlined Black</option>
+                                <option>Minimal Gray</option>
+                                <option>Neon Purple</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- PANEL: AUDIO -->
-                <div id="tab-audio" style="display: none;">
-                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
-                    <h2 style="font-size: 18px; font-weight: 700; color: white; margin-bottom: -16px;">Trending Audio</h2>
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
-                        <!-- Track 1 -->
-                        <div style="display: flex; align-items: center; justify-content: space-between; background: #09090c; border: 1px solid #252531; padding: 16px; border-radius: 12px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; background: rgba(124, 58, 237, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                    <i data-lucide="music" style="color: #7c3aed; width: 20px;"></i>
-                                </div>
-                                <div>
-                                    <div style="color: white; font-weight: 600; font-size: 14px;">Calm Vibes</div>
-                                    <div style="color: #7a7890; font-size: 12px;">2:30</div>
-                                </div>
+                <!-- AUDIO TAB -->
+                <div id="tab-audio" style="display:none;">
+                    <div style="display:flex;flex-direction:column;gap:16px;">
+                        <h2 style="font-size:18px;font-weight:700;color:white;">Trending Audio</h2>
+                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
+                                <div><div style="color:white;font-weight:600;font-size:14px;">Calm Vibes</div><div style="color:#7a7890;font-size:12px;">2:30</div></div>
                             </div>
-                            <div style="width: 32px; height: 32px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                                <i data-lucide="play" style="color: white; width: 14px; height: 14px; margin-left: 2px;"></i>
-                            </div>
+                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
                         </div>
-                        <!-- Track 2 -->
-                        <div style="display: flex; align-items: center; justify-content: space-between; background: #09090c; border: 1px solid #252531; padding: 16px; border-radius: 12px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; background: rgba(124, 58, 237, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                    <i data-lucide="music" style="color: #7c3aed; width: 20px;"></i>
-                                </div>
-                                <div>
-                                    <div style="color: white; font-weight: 600; font-size: 14px;">Energy Boost</div>
-                                    <div style="color: #7a7890; font-size: 12px;">1:45</div>
-                                </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
+                                <div><div style="color:white;font-weight:600;font-size:14px;">Energy Boost</div><div style="color:#7a7890;font-size:12px;">1:45</div></div>
                             </div>
-                            <div style="width: 32px; height: 32px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                                <i data-lucide="play" style="color: white; width: 14px; height: 14px; margin-left: 2px;"></i>
-                            </div>
+                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
                         </div>
-                        <!-- Track 3 -->
-                        <div style="display: flex; align-items: center; justify-content: space-between; background: #09090c; border: 1px solid #252531; padding: 16px; border-radius: 12px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; background: rgba(124, 58, 237, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                    <i data-lucide="music" style="color: #7c3aed; width: 20px;"></i>
-                                </div>
-                                <div>
-                                    <div style="color: white; font-weight: 600; font-size: 14px;">Lo-fi Chill</div>
-                                    <div style="color: #7a7890; font-size: 12px;">3:10</div>
-                                </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
+                                <div><div style="color:white;font-weight:600;font-size:14px;">Lo-fi Chill</div><div style="color:#7a7890;font-size:12px;">3:10</div></div>
                             </div>
-                            <div style="width: 32px; height: 32px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                                <i data-lucide="play" style="color: white; width: 14px; height: 14px; margin-left: 2px;"></i>
-                            </div>
+                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
                         </div>
-                        <!-- Track 4 -->
-                        <div style="display: flex; align-items: center; justify-content: space-between; background: #09090c; border: 1px solid #252531; padding: 16px; border-radius: 12px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; background: rgba(124, 58, 237, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                    <i data-lucide="music" style="color: #7c3aed; width: 20px;"></i>
-                                </div>
-                                <div>
-                                    <div style="color: white; font-weight: 600; font-size: 14px;">Beat Drop</div>
-                                    <div style="color: #7a7890; font-size: 12px;">0:58</div>
-                                </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
+                                <div><div style="color:white;font-weight:600;font-size:14px;">Beat Drop</div><div style="color:#7a7890;font-size:12px;">0:58</div></div>
                             </div>
-                            <div style="width: 32px; height: 32px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                                <i data-lucide="play" style="color: white; width: 14px; height: 14px; margin-left: 2px;"></i>
-                            </div>
+                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
                         </div>
-                        <!-- Track 5 -->
-                        <div style="display: flex; align-items: center; justify-content: space-between; background: #09090c; border: 1px solid #252531; padding: 16px; border-radius: 12px;">
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <div style="width: 40px; height: 40px; background: rgba(124, 58, 237, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                    <i data-lucide="music" style="color: #7c3aed; width: 20px;"></i>
-                                </div>
-                                <div>
-                                    <div style="color: white; font-weight: 600; font-size: 14px;">Soft Piano</div>
-                                    <div style="color: #7a7890; font-size: 12px;">2:15</div>
-                                </div>
+                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
+                                <div><div style="color:white;font-weight:600;font-size:14px;">Soft Piano</div><div style="color:#7a7890;font-size:12px;">2:15</div></div>
                             </div>
-                            <div style="width: 32px; height: 32px; background: #7c3aed; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-                                <i data-lucide="play" style="color: white; width: 14px; height: 14px; margin-left: 2px;"></i>
-                            </div>
+                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
-                <!-- PANEL: EXPORT -->
-                <div id="tab-export" style="display: none;">
-                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
-                    <h2 style="font-size: 18px; font-weight: 700; color: white; margin-bottom: -16px;">Export your Reel</h2>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">Platform</label>
-                        <select style="width: 100%; background: #09090c; border: 1px solid #252531; color: white; padding: 14px; border-radius: 8px; outline: none; appearance: none; cursor: pointer; margin-bottom: 8px;">
-                            <option>Instagram Reels</option>
-                            <option>TikTok</option>
-                            <option>YouTube Shorts</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 12px;">Video Quality</label>
-                        <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <div style="background: rgba(124, 58, 237, 0.1); border: 1px solid #7c3aed; display: flex; justify-content: space-between; padding: 16px; border-radius: 8px; cursor: pointer;">
-                                <span style="font-weight: 600; color: white;">HD 1080p</span>
-                                <span style="color: #7c3aed; font-size: 12px; font-weight: 700;">PRO</span>
-                            </div>
-                            <div style="background: #09090c; border: 1px solid #252531; display: flex; justify-content: space-between; padding: 16px; border-radius: 8px; cursor: pointer;">
-                                <span style="font-weight: 600; color: #7a7890;">SD 720p</span>
-                                <span style="color: #7a7890; font-size: 12px;">Standard</span>
-                            </div>
-                            <div style="background: #09090c; border: 1px solid #252531; display: flex; justify-content: space-between; padding: 16px; border-radius: 8px; cursor: pointer;">
-                                <span style="font-weight: 600; color: #7a7890;">Low 480p</span>
-                                <span style="color: #7a7890; font-size: 12px;">Fast</span>
+                <!-- EXPORT TAB -->
+                <div id="tab-export" style="display:none;">
+                    <div style="display:flex;flex-direction:column;gap:24px;">
+                        <h2 style="font-size:18px;font-weight:700;color:white;">Export your Reel</h2>
+                        <div>
+                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Platform</label>
+                            <select style="width:100%;background:#09090c;border:1px solid #252531;color:white;padding:14px;border-radius:8px;outline:none;cursor:pointer;">
+                                <option>Instagram Reels</option>
+                                <option>TikTok</option>
+                                <option>YouTube Shorts</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:12px;">Video Quality</label>
+                            <div style="display:flex;flex-direction:column;gap:12px;">
+                                <div style="background:rgba(124,58,237,0.1);border:1px solid #7c3aed;display:flex;justify-content:space-between;padding:16px;border-radius:8px;cursor:pointer;">
+                                    <span style="font-weight:600;color:white;">HD 1080p</span>
+                                    <span style="color:#7c3aed;font-size:12px;font-weight:700;">PRO</span>
+                                </div>
+                                <div style="background:#09090c;border:1px solid #252531;display:flex;justify-content:space-between;padding:16px;border-radius:8px;cursor:pointer;">
+                                    <span style="font-weight:600;color:#7a7890;">SD 720p</span>
+                                    <span style="color:#7a7890;font-size:12px;">Standard</span>
+                                </div>
+                                <div style="background:#09090c;border:1px solid #252531;display:flex;justify-content:space-between;padding:16px;border-radius:8px;cursor:pointer;">
+                                    <span style="font-weight:600;color:#7a7890;">Low 480p</span>
+                                    <span style="color:#7a7890;font-size:12px;">Fast</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div style="margin-top: auto; padding-top: 40px;">
-                        <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">Download Reel</button>
-                    </div>
+                        <button class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;">Download Reel</button>
                     </div>
                 </div>
             </div>
-            
         </div>
     </main>
 
@@ -344,9 +247,86 @@
     <script>
         lucide.createIcons();
 
-        function showTab(tabName) { document.getElementById('tab-edit').style.display = 'none'; document.getElementById('tab-captions').style.display = 'none'; document.getElementById('tab-audio').style.display = 'none'; document.getElementById('tab-export').style.display = 'none'; document.getElementById('tab-' + tabName).style.display = 'block'; document.getElementById('btn-edit').classList.remove('active'); document.getElementById('btn-captions').classList.remove('active'); document.getElementById('btn-audio').classList.remove('active'); document.getElementById('btn-export').classList.remove('active'); document.getElementById('btn-' + tabName).classList.add('active'); } document.addEventListener('DOMContentLoaded', function() { showTab('edit'); });
+        function showTab(tabName) {
+            document.getElementById('tab-edit').style.display = 'none';
+            document.getElementById('tab-captions').style.display = 'none';
+            document.getElementById('tab-audio').style.display = 'none';
+            document.getElementById('tab-export').style.display = 'none';
+            document.getElementById('tab-' + tabName).style.display = 'block';
+            document.getElementById('btn-edit').classList.remove('active');
+            document.getElementById('btn-captions').classList.remove('active');
+            document.getElementById('btn-audio').classList.remove('active');
+            document.getElementById('btn-export').classList.remove('active');
+            document.getElementById('btn-' + tabName).classList.add('active');
+        }
 
-        const videoUrl = localStorage.getItem('uploadedVideoUrl'); if (videoUrl) { const video = document.getElementById('previewVideo'); const placeholder = document.getElementById('playPlaceholder'); video.src = videoUrl; video.style.display = 'block'; if (placeholder) placeholder.style.display = 'none'; video.load(); }
+        document.addEventListener('DOMContentLoaded', function() {
+            showTab('edit');
+            const videoUrl = localStorage.getItem('uploadedVideoUrl');
+            if (videoUrl) {
+                const video = document.getElementById('previewVideo');
+                const placeholder = document.getElementById('playPlaceholder');
+                video.src = videoUrl;
+                video.style.display = 'block';
+                if (placeholder) placeholder.style.display = 'none';
+                video.load();
+            }
+        });
+
+        async function generateCaptions() {
+            const videoUrl = localStorage.getItem('uploadedVideoUrl');
+            if (!videoUrl) {
+                alert('Please upload a video first!');
+                return;
+            }
+            const btn = document.getElementById('captionBtn');
+            const status = document.getElementById('captionStatus');
+            btn.textContent = 'Generating...';
+            btn.disabled = true;
+            status.style.display = 'block';
+
+            try {
+                const ASSEMBLY_KEY = '979f0cedd0074af78aecf192c8d9c002';
+                const submitRes = await fetch('https://api.assemblyai.com/v2/transcript', {
+                    method: 'POST',
+                    headers: {
+                        'authorization': ASSEMBLY_KEY,
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ audio_url: videoUrl })
+                });
+                const submitData = await submitRes.json();
+                const transcriptId = submitData.id;
+
+                const pollInterval = setInterval(async () => {
+                    const pollRes = await fetch('https://api.assemblyai.com/v2/transcript/' + transcriptId, {
+                        headers: { 'authorization': ASSEMBLY_KEY }
+                    });
+                    const pollData = await pollRes.json();
+
+                    if (pollData.status === 'completed') {
+                        clearInterval(pollInterval);
+                        document.getElementById('captionText').value = pollData.text;
+                        btn.textContent = 'Generate auto-captions';
+                        btn.disabled = false;
+                        status.style.display = 'none';
+                        alert('Captions generated successfully!');
+                    } else if (pollData.status === 'error') {
+                        clearInterval(pollInterval);
+                        btn.textContent = 'Generate auto-captions';
+                        btn.disabled = false;
+                        status.style.display = 'none';
+                        alert('Error generating captions. Please try again.');
+                    }
+                }, 3000);
+
+            } catch(e) {
+                btn.textContent = 'Generate auto-captions';
+                btn.disabled = false;
+                status.style.display = 'none';
+                alert('Something went wrong: ' + e.message);
+            }
+        }
     </script>
 </body>
 </html>
