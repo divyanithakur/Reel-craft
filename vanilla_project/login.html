@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | ReelCraft</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .auth-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px;
+        }
+        .auth-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 30px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0f0f13;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .input-field:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            margin: 10px 0;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .divider span {
+            padding: 0 10px;
+            font-size: 0.9rem;
+        }
+        .auth-footer-text {
+            margin-top: 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .badge-purple {
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--accent-color);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">ReelCraft</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="login.html">Log in</a></li>
+            </ul>
+            <a href="signup.html" class="btn btn-primary">Get started free</a>
+        </div>
+    </nav>
+
+    <div class="auth-section">
+        <div class="auth-card reveal">
+            <span class="badge-purple">Welcome back</span>
+            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 0.5rem;">Log in to ReelCraft</h2>
+            <p class="subtitle" style="margin-bottom: 0;">Continue editing your Reels</p>
+            
+            <div class="auth-form">
+                <input type="email" id="email" placeholder="Enter your email" class="input-field">
+                <input type="password" id="password" placeholder="Enter your password" class="input-field">
+                <button class="btn btn-primary full-width" onclick="handleLogin()">Log in</button>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <button class="btn btn-outline full-width">Continue with Google</button>
+            </div>
+            
+            <p class="auth-footer-text">
+                Don't have an account? <a href="signup.html" class="text-purple">Sign up free</a>
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="logo">ReelCraft</div>
+            <p class="footer-msg">Built for small creators. Free to start.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+        const SUPABASE_URL = 'https://uqhsumymxsdzshxhsuma.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_-5z1eZF9B7nuntIx3lbfXg_y5n7gFqJ';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) {
+                alert(error.message);
+            } else {
+                window.location.href = 'dashboard.html';
+            }
+        }
+        
+        lucide.createIcons();
+    </script>
+</body>
+</html>
