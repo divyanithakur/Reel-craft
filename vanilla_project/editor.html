@@ -128,14 +128,15 @@
 
                 <!-- Tabs Header -->
                 <div style="display: flex; border-bottom: 1px solid #252531; margin-bottom: 24px;">
-                    <div class="tab-btn active" onclick="switchTab('edit')">Edit</div>
-                    <div class="tab-btn" onclick="switchTab('captions')">Captions</div>
-                    <div class="tab-btn" onclick="switchTab('audio')">Audio</div>
-                    <div class="tab-btn" onclick="switchTab('export')">Export</div>
+                    <div class="tab-btn active" id="btn-edit" onclick='showTab("edit")'>Edit</div>
+                    <div class="tab-btn" id="btn-captions" onclick='showTab("captions")'>Captions</div>
+                    <div class="tab-btn" id="btn-audio" onclick='showTab("audio")'>Audio</div>
+                    <div class="tab-btn" id="btn-export" onclick='showTab("export")'>Export</div>
                 </div>
                 
                 <!-- PANEL: EDIT -->
-                <div id="panel-edit" class="tab-panel active">
+                <div id="tab-edit" style="display: none;">
+                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
                     <!-- Trim -->
                     <div>
                         <h3 style="font-size: 14px; color: #7a7890; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 600;">Trim</h3>
@@ -177,10 +178,12 @@
                     <div style="margin-top: auto; padding-top: 40px;">
                         <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">Export Reel</button>
                     </div>
+                    </div>
                 </div>
 
                 <!-- PANEL: CAPTIONS -->
-                <div id="panel-captions" class="tab-panel">
+                <div id="tab-captions" style="display: none;">
+                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
                     <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">
                         <i data-lucide="sparkles" style="margin-right: 8px; width: 18px;"></i> Generate auto-captions
                     </button>
@@ -197,10 +200,12 @@
                             <option>Neon Purple</option>
                         </select>
                     </div>
+                    </div>
                 </div>
 
                 <!-- PANEL: AUDIO -->
-                <div id="panel-audio" class="tab-panel">
+                <div id="tab-audio" style="display: none;">
+                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
                     <h2 style="font-size: 18px; font-weight: 700; color: white; margin-bottom: -16px;">Trending Audio</h2>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         <!-- Track 1 -->
@@ -279,10 +284,12 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
 
                 <!-- PANEL: EXPORT -->
-                <div id="panel-export" class="tab-panel">
+                <div id="tab-export" style="display: none;">
+                    <div style="display: flex; flex-direction: column; gap: 32px; flex: 1;">
                     <h2 style="font-size: 18px; font-weight: 700; color: white; margin-bottom: -16px;">Export your Reel</h2>
                     <div>
                         <label style="display: block; font-size: 12px; color: #7a7890; margin-bottom: 6px;">Platform</label>
@@ -313,6 +320,7 @@
                     <div style="margin-top: auto; padding-top: 40px;">
                         <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">Download Reel</button>
                     </div>
+                    </div>
                 </div>
             </div>
             
@@ -334,20 +342,7 @@
     <script>
         lucide.createIcons();
 
-        function switchTab(tabId) {
-            // Update Tab Buttons Status
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            // Setting active tab explicitly
-            event.currentTarget.classList.add('active');
-
-            // Update Panels Status
-            document.querySelectorAll('.tab-panel').forEach(panel => {
-                panel.classList.remove('active');
-            });
-            document.getElementById('panel-' + tabId).classList.add('active');
-        }
+        function showTab(tabName) { document.getElementById('tab-edit').style.display = 'none'; document.getElementById('tab-captions').style.display = 'none'; document.getElementById('tab-audio').style.display = 'none'; document.getElementById('tab-export').style.display = 'none'; document.getElementById('tab-' + tabName).style.display = 'block'; document.getElementById('btn-edit').classList.remove('active'); document.getElementById('btn-captions').classList.remove('active'); document.getElementById('btn-audio').classList.remove('active'); document.getElementById('btn-export').classList.remove('active'); document.getElementById('btn-' + tabName).classList.add('active'); } document.addEventListener('DOMContentLoaded', function() { showTab('edit'); });
     </script>
 </body>
 </html>
