@@ -647,9 +647,9 @@ body {
 }
 
 .hero h1 { animation: fadeInUp 0.8s ease forwards; }
-.subtitle { animation: fadeInUp 0.8s ease 0.1s forwards; opacity: 0; }
-.hero-btns { animation: fadeInUp 0.8s ease 0.2s forwards; opacity: 0; }
-.editor-preview { animation: fadeInUp 0.8s ease 0.3s forwards; opacity: 0; }
+.subtitle { animation: fadeInUp 0.8s ease 0.1s forwards; }
+.hero-btns { animation: fadeInUp 0.8s ease 0.2s forwards; }
+.editor-preview { animation: fadeInUp 0.8s ease 0.3s forwards; }
 
 .btn-primary { animation: glow-pulse 3s ease infinite; }
 
