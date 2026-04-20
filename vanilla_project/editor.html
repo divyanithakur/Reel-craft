@@ -284,7 +284,6 @@
 
             try {
                 const ASSEMBLY_KEY = '979f0cedd0074af78aecf192c8d9c002';
-                
                 console.log('Sending video URL to AssemblyAI:', videoUrl);
                 
                 const submitRes = await fetch('https://api.assemblyai.com/v2/transcript', {
@@ -293,7 +292,10 @@
                         'authorization': ASSEMBLY_KEY,
                         'content-type': 'application/json'
                     },
-                    body: JSON.stringify({ audio_url: videoUrl })
+                    body: JSON.stringify({ 
+                        audio_url: videoUrl,
+                        speech_model: 'universal-2'
+                    })
                 });
                 
                 const submitData = await submitRes.json();
