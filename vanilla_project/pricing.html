@@ -50,7 +50,7 @@
                     <li><i data-lucide="check"></i> Standard quality export</li>
                     <li><i data-lucide="check"></i> ReelCraft watermark</li>
                 </ul>
-                <button class="btn btn-outline full-width">Get started free</button>
+                <button class="btn btn-outline full-width" onclick="window.location.href='signup.html'">Get started free</button>
             </div>
 
             <!-- Pro Plan -->
@@ -70,7 +70,7 @@
                     <li><i data-lucide="check"></i> No watermark</li>
                     <li><i data-lucide="check"></i> Priority support</li>
                 </ul>
-                <button class="btn btn-primary full-width">Start Pro free trial</button>
+                <button class="btn btn-primary full-width" onclick="window.location.href='signup.html?plan=pro'">Start Pro free trial</button>
             </div>
 
             <!-- Creator Plan -->
@@ -87,7 +87,7 @@
                     <li><i data-lucide="check"></i> Multi-platform export</li>
                     <li><i data-lucide="check"></i> Dedicated support</li>
                 </ul>
-                <button class="btn btn-outline full-width">Get Creator plan</button>
+                <button class="btn btn-outline full-width" onclick="window.location.href='signup.html?plan=creator'">Get Creator plan</button>
             </div>
         </div>
     </section>
@@ -95,24 +95,42 @@
     <section class="faq section reveal">
         <div class="container">
             <h2 class="section-title">Common questions</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <h4>Can I really start for free?</h4>
-                    <p>Yes, the free plan gives you 5 exports every month with no credit card needed.</p>
+                <div class="faq-item" style="border-bottom: 1px solid #252531; padding: 16px 0; border-top: 1px solid #252531;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleFaq(this)">
+                        <h4 style="margin: 0;">Can I really start for free?</h4>
+                        <div class="faq-icon" style="transition: transform 0.3s; font-size: 24px; line-height: 1;">+</div>
+                    </div>
+                    <div class="faq-answer" style="display: none; margin-top: 12px; color: #7a7890;">
+                        <p style="margin:0;">Yes, the free plan gives you 5 exports every month with no credit card needed.</p>
+                    </div>
                 </div>
-                <div class="faq-item">
-                    <h4>Can I cancel anytime?</h4>
-                    <p>Yes, you can cancel your plan anytime with no questions asked.</p>
+                <div class="faq-item" style="border-bottom: 1px solid #252531; padding: 16px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleFaq(this)">
+                        <h4 style="margin: 0;">Can I cancel anytime?</h4>
+                        <div class="faq-icon" style="transition: transform 0.3s; font-size: 24px; line-height: 1;">+</div>
+                    </div>
+                    <div class="faq-answer" style="display: none; margin-top: 12px; color: #7a7890;">
+                        <p style="margin:0;">Yes, you can cancel your plan anytime with no questions asked.</p>
+                    </div>
                 </div>
-                <div class="faq-item">
-                    <h4>Is my video data safe?</h4>
-                    <p>Yes, all videos are deleted from our servers after you download them.</p>
+                <div class="faq-item" style="border-bottom: 1px solid #252531; padding: 16px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleFaq(this)">
+                        <h4 style="margin: 0;">Is my video data safe?</h4>
+                        <div class="faq-icon" style="transition: transform 0.3s; font-size: 24px; line-height: 1;">+</div>
+                    </div>
+                    <div class="faq-answer" style="display: none; margin-top: 12px; color: #7a7890;">
+                        <p style="margin:0;">Yes, all videos are deleted from our servers after you download them.</p>
+                    </div>
                 </div>
-                <div class="faq-item">
-                    <h4>Do I need editing experience?</h4>
-                    <p>No, ReelCraft is built for complete beginners.</p>
+                <div class="faq-item" style="border-bottom: 1px solid #252531; padding: 16px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleFaq(this)">
+                        <h4 style="margin: 0;">Do I need editing experience?</h4>
+                        <div class="faq-icon" style="transition: transform 0.3s; font-size: 24px; line-height: 1;">+</div>
+                    </div>
+                    <div class="faq-answer" style="display: none; margin-top: 12px; color: #7a7890;">
+                        <p style="margin:0;">No, ReelCraft is built for complete beginners.</p>
+                    </div>
                 </div>
-            </div>
         </div>
     </section>
 
@@ -130,6 +148,29 @@
 
     <script>
         lucide.createIcons();
+
+        function toggleFaq(headerEl) {
+            const allItems = document.querySelectorAll('.faq-item');
+            const parent = headerEl.parentElement;
+            const answer = parent.querySelector('.faq-answer');
+            const icon = headerEl.querySelector('.faq-icon');
+            
+            const isOpen = answer.style.display === 'block';
+
+            // Close all
+            allItems.forEach(item => {
+                const ans = item.querySelector('.faq-answer');
+                const icn = item.querySelector('.faq-icon');
+                if (ans) ans.style.display = 'none';
+                if (icn) icn.style.transform = 'rotate(0deg)';
+            });
+
+            // If it wasn't open, open it
+            if (!isOpen) {
+                answer.style.display = 'block';
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
     </script>
 </body>
 </html>

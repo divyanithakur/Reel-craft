@@ -9,8 +9,257 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (min-width: 992px) {
+            .editor-container {
+                flex-direction: row;
+            }
+            .left-col {
+                flex: 0 0 60%;
+                max-width: 60%;
+            }
+            .right-col {
+                flex: 0 0 40%;
+                max-width: 40%;
+            }
+        }
+        
+        .video-container {
+            background: #0f0f13;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 16/9;
+            border: 1px solid #252531;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            max-height: 70vh;
+            background: #000;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            color: #7a7890;
+            font-size: 0.9rem;
+        }
+
+        /* Timeline Scrubber Mock */
+        .timeline-container {
+            margin-top: 16px;
+            background: #16161d;
+            border: 1px solid #252531;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .timeline-track {
+            height: 48px;
+            background: #0f0f13;
+            border-radius: 4px;
+            position: relative;
+            margin-bottom: 8px;
+            border: 1px solid #252531;
+        }
+        .timeline-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            cursor: ew-resize;
+        }
+        .handle-start {
+            left: 10%;
+            background: #22c55e;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+        .handle-end {
+            right: 20%;
+            background: #e24b4a;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+        .timeline-selection {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 10%;
+            right: 20%;
+            background: rgba(124, 58, 237, 0.2);
+            border-top: 2px solid #7c3aed;
+            border-bottom: 2px solid #7c3aed;
+        }
+
+        /* Right column tools */
+        .tool-card {
+            background: #16161d;
+            border: 1px solid #252531;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        .tool-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .input-group {
+            flex: 1;
+        }
+        .input-group label {
+            display: block;
+            color: #7a7890;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .tool-input {
+            width: 100%;
+            background: #0f0f13;
+            border: 1px solid #252531;
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        /* Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #252531;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #7c3aed; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .chip-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .chip {
+            background: #0f0f13;
+            border: 1px solid #252531;
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chip.active {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: #7c3aed;
+            color: #7c3aed;
+        }
+        .chip:hover:not(.active) {
+            border-color: #7a7890;
+        }
+
+        .music-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #0f0f13;
+            border: 1px solid #252531;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .music-row:hover {
+            border-color: #7a7890;
+        }
+        .music-row.active {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.05);
+        }
+        .music-icon {
+            width: 32px;
+            height: 32px;
+            background: #252531;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #exportOverlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 15, 19, 0.95);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #16161d;
+            border: 1px solid #22c55e;
+            padding: 16px 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1001;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
 </head>
-<body>
+<body class="dashboard-body">
     <nav class="navbar">
         <div class="container navbar-content">
             <a href="index.html" class="logo">ReelCraft</a>
@@ -19,209 +268,142 @@
                 <li><a href="index.html#features">Features</a></li>
                 <li><a href="pricing.html">Pricing</a></li>
                 <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="login.html">Log in</a></li>
             </ul>
-            <a href="signup.html" class="btn btn-primary">Get started free</a>
+            <div style="display:flex; gap: 12px; align-items: center;">
+                <div class="user-avatar">RC</div>
+                <button onclick="doLogout()" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.9rem; border-color: #252531; background: transparent; color: white;">Logout</button>
+            </div>
         </div>
     </nav>
 
-    <main class="section" style="padding-top: 120px; padding-bottom: 80px; min-height: 80vh;">
-        <div class="container" style="display: flex; gap: 24px; max-width: 1200px; flex-wrap: wrap;">
+    <main class="editor-container">
+        <!-- Left Column -->
+        <div class="left-col">
+            <div class="video-container">
+                <video id="editorVideo" controls></video>
+            </div>
             
-            <div style="flex: 1 1 60%; display: flex; flex-direction: column; gap: 24px; min-width: 600px;">
-                <div style="background: #16161d; border-radius: 12px; overflow: hidden; border: 1px solid #252531;">
-                    <div style="aspect-ratio: 16/9; background: #09090c; display: flex; align-items: center; justify-content: center; position: relative;">
-                        <video id="previewVideo" controls style="width:100%;height:100%;display:none;"></video>
-                        <div id="playPlaceholder" style="width:72px;height:72px;background:rgba(124,58,237,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                            <i data-lucide="play" style="color:white;width:32px;height:32px;margin-left:4px;fill:white;"></i>
-                        </div>
-                        <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 24px;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);">
-                            <div style="height:6px;background:rgba(255,255,255,0.2);border-radius:3px;position:relative;margin-bottom:16px;cursor:pointer;">
-                                <div style="position:absolute;left:0;top:0;bottom:0;width:40%;background:#7c3aed;border-radius:3px;">
-                                    <div style="position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:white;border-radius:50%;"></div>
-                                </div>
-                            </div>
-                            <div style="display:flex;justify-content:space-between;align-items:center;color:white;">
-                                <div style="display:flex;gap:24px;align-items:center;">
-                                    <i data-lucide="skip-back" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
-                                    <i data-lucide="play" style="cursor:pointer;width:24px;height:24px;fill:white;"></i>
-                                    <i data-lucide="skip-forward" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
-                                    <i data-lucide="volume-2" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
-                                </div>
-                                <div style="display:flex;align-items:center;gap:16px;">
-                                    <span style="font-family:monospace;font-size:13px;opacity:0.8;">0:06 / 0:15</span>
-                                    <i data-lucide="maximize" style="cursor:pointer;width:20px;height:20px;opacity:0.8;"></i>
-                                </div>
-                            </div>
-                        </div>
+            <div class="meta-info">
+                <span id="videoFilename"><i data-lucide="file-video" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i> project.mp4</span>
+                <span id="videoSize"><i data-lucide="hard-drive" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i> 0 MB</span>
+                <span id="videoDuration"><i data-lucide="clock" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i> 0:00</span>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline-track" id="timelineTrack">
+                    <div class="timeline-selection" id="timelineSelection"></div>
+                    <div class="timeline-handle handle-start" id="handleStart"></div>
+                    <div class="timeline-handle handle-end" id="handleEnd"></div>
+                </div>
+                <div style="text-align: center; color: #7a7890; font-size: 0.9rem; margin-top: 12px;" id="trimStatus">
+                    Selected: 0:00 → 0:00 (0 sec)
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-col">
+            <!-- 1. Trim Video -->
+            <div class="tool-card">
+                <div class="tool-title"><i data-lucide="scissors"></i> Trim Video</div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Start time (sec)</label>
+                        <input type="number" id="startTimeInput" class="tool-input" value="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>End time (sec)</label>
+                        <input type="number" id="endTimeInput" class="tool-input" value="0" min="0">
                     </div>
                 </div>
+                <button class="btn btn-outline full-width" onclick="previewTrim()">Preview trim</button>
+            </div>
 
-                <div style="background:#16161d;border-radius:12px;border:1px solid #252531;padding:24px;">
-                    <div style="display:flex;flex-direction:column;gap:16px;">
-                        <div style="display:flex;align-items:center;gap:16px;">
-                            <div style="width:60px;color:#7a7890;font-size:13px;font-weight:600;">Video</div>
-                            <div style="flex:1;height:28px;background:rgba(124,58,237,0.2);border:1px solid #7c3aed;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#d8b4fe;font-weight:500;cursor:move;">raw_footage_01.mp4</div>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:16px;">
-                            <div style="width:60px;color:#7a7890;font-size:13px;font-weight:600;">Audio</div>
-                            <div style="flex:1;height:28px;background:rgba(59,130,246,0.2);border:1px solid #3b82f6;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#bfdbfe;font-weight:500;cursor:move;">background_music.wav</div>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:16px;">
-                            <div style="width:60px;color:#7a7890;font-size:13px;font-weight:600;">Text</div>
-                            <div style="flex:1;display:flex;gap:8px;">
-                                <div style="width:30%;height:28px;background:rgba(34,197,94,0.2);border:1px solid #22c55e;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#bbf7d0;font-weight:500;cursor:move;">Auto-caption #1</div>
-                                <div style="flex:1;height:28px;background:rgba(34,197,94,0.2);border:1px solid #22c55e;border-radius:6px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#bbf7d0;font-weight:500;cursor:move;">Auto-caption #2</div>
-                            </div>
-                        </div>
+            <!-- 2. Auto Captions -->
+            <div class="tool-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div class="tool-title" style="margin-bottom:0;"><i data-lucide="type"></i> Auto Captions</div>
+                    <label class="switch">
+                        <input type="checkbox" checked id="captionsToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <textarea id="captionsText" class="tool-input" rows="4" placeholder="Captions will appear here after processing..."></textarea>
+                <div style="margin-top: 12px;">
+                    <button class="btn btn-outline full-width" id="genCaptionsBtn" onclick="generateCaptions()">Generate captions</button>
+                </div>
+                <div style="margin-top: 16px;">
+                    <label style="color:#7a7890; font-size:0.85rem;">Caption Style</label>
+                    <div class="chip-group">
+                        <div class="chip active" onclick="selectChip(this)">White text</div>
+                        <div class="chip" onclick="selectChip(this)">Yellow text</div>
+                        <div class="chip" onclick="selectChip(this)">Bold black outline</div>
                     </div>
                 </div>
             </div>
 
-            <div style="flex:0 0 32%;background:#16161d;border:1px solid #252531;border-radius:12px;padding:24px;display:flex;flex-direction:column;min-width:320px;">
-                <style>
-                    .tab-btn { padding:12px 16px;color:#7a7890;font-weight:500;cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent; }
-                    .tab-btn:hover { color:#f0eeff; }
-                    .tab-btn.active { color:#f0eeff;font-weight:600;border-bottom:2px solid #7c3aed; }
-                </style>
-
-                <div style="display:flex;border-bottom:1px solid #252531;margin-bottom:24px;">
-                    <div class="tab-btn active" id="btn-edit" onclick='showTab("edit")'>Edit</div>
-                    <div class="tab-btn" id="btn-captions" onclick='showTab("captions")'>Captions</div>
-                    <div class="tab-btn" id="btn-audio" onclick='showTab("audio")'>Audio</div>
-                    <div class="tab-btn" id="btn-export" onclick='showTab("export")'>Export</div>
+            <!-- 3. Add Music -->
+            <div class="tool-card">
+                <div class="tool-title"><i data-lucide="music"></i> Add Music</div>
+                <div class="music-row active" onclick="selectMusic(this)">
+                    <div class="music-icon"><i data-lucide="play" style="width:16px;height:16px;margin-left:2px;"></i></div>
+                    <div style="flex:1;">
+                        <div style="font-weight:500;">Upbeat Vlog</div>
+                    </div>
+                    <div style="color:#7a7890; font-size:0.85rem;">0:30</div>
                 </div>
+                <div class="music-row" onclick="selectMusic(this)">
+                    <div class="music-icon"><i data-lucide="play" style="width:16px;height:16px;margin-left:2px;"></i></div>
+                    <div style="flex:1;">
+                        <div style="font-weight:500;">Chill Lo-fi</div>
+                    </div>
+                    <div style="color:#7a7890; font-size:0.85rem;">1:45</div>
+                </div>
+                <div class="music-row" onclick="selectMusic(this)">
+                    <div class="music-icon"><i data-lucide="play" style="width:16px;height:16px;margin-left:2px;"></i></div>
+                    <div style="flex:1;">
+                        <div style="font-weight:500;">Dramatic Rise</div>
+                    </div>
+                    <div style="color:#7a7890; font-size:0.85rem;">0:40</div>
+                </div>
+                <div class="music-row" onclick="selectMusic(this)">
+                    <div class="music-icon"><i data-lucide="play" style="width:16px;height:16px;margin-left:2px;"></i></div>
+                    <div style="flex:1;">
+                        <div style="font-weight:500;">Happy Pop</div>
+                    </div>
+                    <div style="color:#7a7890; font-size:0.85rem;">1:10</div>
+                </div>
+                <div class="music-row" onclick="selectMusic(this)">
+                    <div class="music-icon"><i data-lucide="play" style="width:16px;height:16px;margin-left:2px;"></i></div>
+                    <div style="flex:1;">
+                        <div style="font-weight:500;">Cinematic</div>
+                    </div>
+                    <div style="color:#7a7890; font-size:0.85rem;">2:00</div>
+                </div>
+            </div>
 
-                <div id="tab-edit" style="display:none;">
-                    <div style="display:flex;flex-direction:column;gap:32px;">
-                        <div>
-                            <h3 style="font-size:14px;color:#7a7890;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;font-weight:600;">Trim</h3>
-                            <div style="display:flex;gap:12px;">
-                                <div style="flex:1;">
-                                    <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Start Time</label>
-                                    <input type="text" value="00:00:00" style="width:100%;background:#09090c;border:1px solid #252531;border-radius:6px;padding:12px;color:white;font-family:monospace;font-size:14px;outline:none;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
-                                </div>
-                                <div style="flex:1;">
-                                    <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">End Time</label>
-                                    <input type="text" value="00:00:15" style="width:100%;background:#09090c;border:1px solid #252531;border-radius:6px;padding:12px;color:white;font-family:monospace;font-size:14px;outline:none;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 style="font-size:14px;color:#7a7890;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;font-weight:600;">Speed</h3>
-                            <div style="display:flex;gap:8px;">
-                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">0.5x</button>
-                                <button style="flex:1;background:#7c3aed;border:none;color:white;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">1x</button>
-                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">1.5x</button>
-                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">2x</button>
-                                <button style="flex:1;background:#09090c;border:1px solid #252531;color:#7a7890;padding:10px 0;border-radius:6px;font-weight:600;cursor:pointer;">3x</button>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 style="font-size:14px;color:#7a7890;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;font-weight:600;">Transitions</h3>
-                            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-                                <div style="background:rgba(124,58,237,0.1);border:1px solid #7c3aed;color:white;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">None</div>
-                                <div style="background:#09090c;border:1px solid #252531;color:#7a7890;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">Fade</div>
-                                <div style="background:#09090c;border:1px solid #252531;color:#7a7890;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">Slide</div>
-                                <div style="background:#09090c;border:1px solid #252531;color:#7a7890;padding:14px;border-radius:8px;text-align:center;font-weight:500;cursor:pointer;">Zoom</div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;">Export Reel</button>
+            <!-- 4. Export Settings -->
+            <div class="tool-card">
+                <div class="tool-title"><i data-lucide="download"></i> Export Settings</div>
+                <div>
+                    <label style="color:#7a7890; font-size:0.85rem;">Quality</label>
+                    <div class="chip-group">
+                        <div class="chip" onclick="selectChipExport(this)">Standard (480p)</div>
+                        <div class="chip active" onclick="selectChipExport(this)">HD (720p)</div>
+                        <div class="chip" onclick="selectChipExport(this)">Full HD (1080p)</div>
                     </div>
                 </div>
-
-                <div id="tab-captions" style="display:none;">
-                    <div style="display:flex;flex-direction:column;gap:24px;">
-                        <button id="captionBtn" onclick="generateCaptions()" class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;">Generate auto-captions</button>
-                        <div id="captionStatus" style="color:#a78bfa;font-size:13px;display:none;text-align:center;">Processing your video...</div>
-                        <div id="captionError" style="color:#e24b4a;font-size:13px;display:none;text-align:center;"></div>
-                        <div>
-                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Caption Text</label>
-                            <textarea id="captionText" placeholder="Your captions will appear here after generation" style="width:100%;height:150px;background:#09090c;border:1px solid #252531;border-radius:8px;padding:16px;color:white;resize:none;font-family:inherit;outline:none;" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='#252531'"></textarea>
-                        </div>
-                        <div>
-                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Caption Style</label>
-                            <select style="width:100%;background:#09090c;border:1px solid #252531;color:white;padding:14px;border-radius:8px;outline:none;cursor:pointer;">
-                                <option>Bold White</option>
-                                <option>Outlined Black</option>
-                                <option>Minimal Gray</option>
-                                <option>Neon Purple</option>
-                            </select>
-                        </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; border-top:1px solid #252531; padding-top:20px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.95rem;">ReelCraft watermark</span>
                     </div>
+                    <label class="switch">
+                        <input type="checkbox" checked disabled>
+                        <span class="slider"></span>
+                    </label>
                 </div>
-
-                <div id="tab-audio" style="display:none;">
-                    <div style="display:flex;flex-direction:column;gap:16px;">
-                        <h2 style="font-size:18px;font-weight:700;color:white;">Trending Audio</h2>
-                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
-                            <div style="display:flex;align-items:center;gap:12px;">
-                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
-                                <div><div style="color:white;font-weight:600;font-size:14px;">Calm Vibes</div><div style="color:#7a7890;font-size:12px;">2:30</div></div>
-                            </div>
-                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
-                        </div>
-                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
-                            <div style="display:flex;align-items:center;gap:12px;">
-                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
-                                <div><div style="color:white;font-weight:600;font-size:14px;">Energy Boost</div><div style="color:#7a7890;font-size:12px;">1:45</div></div>
-                            </div>
-                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
-                        </div>
-                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
-                            <div style="display:flex;align-items:center;gap:12px;">
-                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
-                                <div><div style="color:white;font-weight:600;font-size:14px;">Lo-fi Chill</div><div style="color:#7a7890;font-size:12px;">3:10</div></div>
-                            </div>
-                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
-                        </div>
-                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
-                            <div style="display:flex;align-items:center;gap:12px;">
-                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
-                                <div><div style="color:white;font-weight:600;font-size:14px;">Beat Drop</div><div style="color:#7a7890;font-size:12px;">0:58</div></div>
-                            </div>
-                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
-                        </div>
-                        <div style="display:flex;align-items:center;justify-content:space-between;background:#09090c;border:1px solid #252531;padding:16px;border-radius:12px;">
-                            <div style="display:flex;align-items:center;gap:12px;">
-                                <div style="width:40px;height:40px;background:rgba(124,58,237,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i data-lucide="music" style="color:#7c3aed;width:20px;"></i></div>
-                                <div><div style="color:white;font-weight:600;font-size:14px;">Soft Piano</div><div style="color:#7a7890;font-size:12px;">2:15</div></div>
-                            </div>
-                            <div style="width:32px;height:32px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="play" style="color:white;width:14px;height:14px;margin-left:2px;"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="tab-export" style="display:none;">
-                    <div style="display:flex;flex-direction:column;gap:24px;">
-                        <h2 style="font-size:18px;font-weight:700;color:white;">Export your Reel</h2>
-                        <div>
-                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:6px;">Platform</label>
-                            <select style="width:100%;background:#09090c;border:1px solid #252531;color:white;padding:14px;border-radius:8px;outline:none;cursor:pointer;">
-                                <option>Instagram Reels</option>
-                                <option>TikTok</option>
-                                <option>YouTube Shorts</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="display:block;font-size:12px;color:#7a7890;margin-bottom:12px;">Video Quality</label>
-                            <div style="display:flex;flex-direction:column;gap:12px;">
-                                <div style="background:rgba(124,58,237,0.1);border:1px solid #7c3aed;display:flex;justify-content:space-between;padding:16px;border-radius:8px;cursor:pointer;">
-                                    <span style="font-weight:600;color:white;">HD 1080p</span>
-                                    <span style="color:#7c3aed;font-size:12px;font-weight:700;">PRO</span>
-                                </div>
-                                <div style="background:#09090c;border:1px solid #252531;display:flex;justify-content:space-between;padding:16px;border-radius:8px;cursor:pointer;">
-                                    <span style="font-weight:600;color:#7a7890;">SD 720p</span>
-                                    <span style="color:#7a7890;font-size:12px;">Standard</span>
-                                </div>
-                                <div style="background:#09090c;border:1px solid #252531;display:flex;justify-content:space-between;padding:16px;border-radius:8px;cursor:pointer;">
-                                    <span style="font-weight:600;color:#7a7890;">Low 480p</span>
-                                    <span style="color:#7a7890;font-size:12px;">Fast</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" style="width:100%;padding:16px;font-size:16px;">Download Reel</button>
-                    </div>
+                <div style="margin-top: 24px;">
+                    <button class="btn btn-primary full-width" style="padding:16px; font-size:1.1rem;" onclick="startExport()">Export Reel</button>
                 </div>
             </div>
         </div>
@@ -239,112 +421,212 @@
         </div>
     </footer>
 
+    <!-- Export Overlay -->
+    <div id="exportOverlay">
+        <h2 style="font-size: 2rem; margin-bottom: 24px;" id="exportStatusMsg">Trimming video...</h2>
+        <div style="width: 300px; height: 12px; background: #252531; border-radius: 6px; overflow: hidden;">
+            <div id="exportProgress" style="width: 0%; height: 100%; background: #7c3aed; transition: width 0.3s ease;"></div>
+        </div>
+        <p style="color:#7a7890; margin-top: 16px;">Please do not close this window</p>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="toast" class="toast">
+        <i data-lucide="check-circle-2" style="color:#22c55e;"></i>
+        <span style="font-weight: 500;">✅ Reel exported successfully!</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
         lucide.createIcons();
 
-        function showTab(tabName) {
-            document.getElementById('tab-edit').style.display = 'none';
-            document.getElementById('tab-captions').style.display = 'none';
-            document.getElementById('tab-audio').style.display = 'none';
-            document.getElementById('tab-export').style.display = 'none';
-            document.getElementById('tab-' + tabName).style.display = 'block';
-            document.getElementById('btn-edit').classList.remove('active');
-            document.getElementById('btn-captions').classList.remove('active');
-            document.getElementById('btn-audio').classList.remove('active');
-            document.getElementById('btn-export').classList.remove('active');
-            document.getElementById('btn-' + tabName).classList.add('active');
-        }
+        const _supabase = supabase.createClient(
+            'https://uqhsumymxsdzshxhsuma.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxaHN1bXlteHNkenNoeGhzdW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MTM1MzIsImV4cCI6MjA4OTk4OTUzMn0.uoIzMauVrGnNHoysnOD5dK20f0EAFanP9Jcf4GbycK0'
+        );
 
-        document.addEventListener('DOMContentLoaded', function() {
-            showTab('edit');
-            const videoUrl = localStorage.getItem('uploadedVideoUrl');
-            if (videoUrl) {
-                const video = document.getElementById('previewVideo');
-                const placeholder = document.getElementById('playPlaceholder');
-                video.src = videoUrl;
-                video.style.display = 'block';
-                if (placeholder) placeholder.style.display = 'none';
-                video.load();
-            }
-        });
-
-        async function generateCaptions() {
-            const videoUrl = localStorage.getItem('uploadedVideoUrl');
-            if (!videoUrl) {
-                alert('Please upload a video first!');
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await _supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
                 return;
             }
-            const btn = document.getElementById('captionBtn');
-            const status = document.getElementById('captionStatus');
-            const errorDiv = document.getElementById('captionError');
-            btn.textContent = 'Generating...';
-            btn.disabled = true;
-            status.style.display = 'block';
-            errorDiv.style.display = 'none';
 
-            try {
-                const ASSEMBLY_KEY = '979f0cedd0074af78aecf192c8d9c002';
-                console.log('Sending video URL to AssemblyAI:', videoUrl);
-                
-                const submitRes = await fetch('https://api.assemblyai.com/v2/transcript', {
-                    method: 'POST',
-                    headers: {
-                        'authorization': ASSEMBLY_KEY,
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        audio_url: videoUrl,
-                        speech_models: ['universal-2'], language_code: 'hi'
-                    })
-                });
-                
-                const submitData = await submitRes.json();
-                console.log('AssemblyAI submit response:', JSON.stringify(submitData));
-                
-                if (!submitData.id) {
-                    btn.textContent = 'Generate auto-captions';
-                    btn.disabled = false;
-                    status.style.display = 'none';
-                    errorDiv.textContent = 'Error: ' + (submitData.error || JSON.stringify(submitData));
-                    errorDiv.style.display = 'block';
-                    return;
-                }
+            // Load video
+            const videoElement = document.getElementById('editorVideo');
+            const b64 = sessionStorage.getItem('uploadedVideo');
+            const sUrl = sessionStorage.getItem('uploadedVideoUrl');
 
-                const transcriptId = submitData.id;
-
-                const pollInterval = setInterval(async () => {
-                    const pollRes = await fetch('https://api.assemblyai.com/v2/transcript/' + transcriptId, {
-                        headers: { 'authorization': ASSEMBLY_KEY }
-                    });
-                    const pollData = await pollRes.json();
-                    console.log('Poll status:', pollData.status);
-
-                    if (pollData.status === 'completed') {
-                        clearInterval(pollInterval);
-                        document.getElementById('captionText').value = pollData.text;
-                        btn.textContent = 'Generate auto-captions';
-                        btn.disabled = false;
-                        status.style.display = 'none';
-                        alert('Captions generated successfully!');
-                    } else if (pollData.status === 'error') {
-                        clearInterval(pollInterval);
-                        btn.textContent = 'Generate auto-captions';
-                        btn.disabled = false;
-                        status.style.display = 'none';
-                        errorDiv.textContent = 'AssemblyAI error: ' + pollData.error;
-                        errorDiv.style.display = 'block';
-                    }
-                }, 3000);
-
-            } catch(e) {
-                btn.textContent = 'Generate auto-captions';
-                btn.disabled = false;
-                status.style.display = 'none';
-                errorDiv.textContent = 'Something went wrong: ' + e.message;
-                errorDiv.style.display = 'block';
-                console.error('Caption error:', e);
+            if (b64) {
+                videoElement.src = b64;
+                // Calculate size approx
+                let sizeInBytes = Math.round((b64.length - 22) * 3 / 4);
+                document.getElementById('videoSize').innerHTML = `<i data-lucide="hard-drive" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i> ${(sizeInBytes / (1024*1024)).toFixed(2)} MB`;
+            } else if (sUrl) {
+                videoElement.src = sUrl;
+                document.getElementById('videoSize').innerHTML = `<i data-lucide="hard-drive" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i> Loaded via Cloud`;
+            } else {
+                console.warn('No video found to edit.');
             }
+
+            videoElement.addEventListener('loadedmetadata', () => {
+                const dur = videoElement.duration;
+                const m = Math.floor(dur / 60);
+                const s = Math.floor(dur % 60).toString().padStart(2, '0');
+                document.getElementById('videoDuration').innerHTML = `<i data-lucide="clock" style="width:16px;height:16px;display:inline;vertical-align:middle;"></i> ${m}:${s}`;
+                
+                document.getElementById('endTimeInput').value = Math.floor(dur);
+                updateTrimStatus();
+            });
+
+            lucide.createIcons();
+        });
+
+        async function doLogout() {
+            await _supabase.auth.signOut();
+            window.location.href = 'login.html';
+        }
+
+        // Dummy logic for Timeline
+        const startInput = document.getElementById('startTimeInput');
+        const endInput = document.getElementById('endTimeInput');
+        const handleStart = document.getElementById('handleStart');
+        const handleEnd = document.getElementById('handleEnd');
+        const sel = document.getElementById('timelineSelection');
+        
+        startInput.addEventListener('input', updateHandlesFromInput);
+        endInput.addEventListener('input', updateHandlesFromInput);
+
+        function updateHandlesFromInput() {
+            const vid = document.getElementById('editorVideo');
+            if(!vid.duration) return;
+            const max = vid.duration;
+            let start = parseFloat(startInput.value) || 0;
+            let end = parseFloat(endInput.value) || max;
+            if (start < 0) start = 0;
+            if (end > max) end = max;
+            if (start > end) start = end;
+
+            const startPct = (start / max) * 100;
+            const endPct = (end / max) * 100;
+
+            handleStart.style.left = startPct + '%';
+            handleEnd.style.right = (100 - endPct) + '%';
+            sel.style.left = startPct + '%';
+            sel.style.right = (100 - endPct) + '%';
+            
+            updateTrimStatus();
+        }
+
+        function updateTrimStatus() {
+             const start = parseFloat(startInput.value) || 0;
+             const end = parseFloat(endInput.value) || 0;
+             const m1 = Math.floor(start/60);
+             const s1 = Math.floor(start%60).toString().padStart(2, '0');
+             const m2 = Math.floor(end/60);
+             const s2 = Math.floor(end%60).toString().padStart(2, '0');
+             const diff = Math.floor(end - start);
+             
+             document.getElementById('trimStatus').textContent = `Selected: ${m1}:${s1} → ${m2}:${s2} (${diff} sec)`;
+        }
+
+        // Preview Trim
+        function previewTrim() {
+            const vid = document.getElementById('editorVideo');
+            const start = parseFloat(startInput.value) || 0;
+            const end = parseFloat(endInput.value) || vid.duration;
+            vid.currentTime = start;
+            vid.play();
+            
+            const timeCheck = setInterval(() => {
+                if (vid.currentTime >= end) {
+                    vid.pause();
+                    clearInterval(timeCheck);
+                }
+            }, 100);
+        }
+
+        // Auto Captions
+        function generateCaptions() {
+            const btn = document.getElementById('genCaptionsBtn');
+            const text = document.getElementById('captionsText');
+            btn.innerHTML = '<div style="display:inline-block; width:16px; height:16px; border:2px solid #fff; border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite;"></div> Generating...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                text.value = "0:00 - Hey guys welcome back!\n0:03 - Today I'm showing you...\n0:06 - This is so amazing!";
+                btn.innerHTML = 'Generate captions';
+                btn.disabled = false;
+            }, 2000);
+        }
+
+        // Chips Selection
+        function selectChip(element) {
+            const siblings = element.parentElement.querySelectorAll('.chip');
+            siblings.forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+        function selectChipExport(element) {
+            const siblings = element.parentElement.querySelectorAll('.chip');
+            siblings.forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // Music Selection
+        function selectMusic(element) {
+            const siblings = document.querySelectorAll('.music-row');
+            siblings.forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // Export Reel
+        function startExport() {
+            const overlay = document.getElementById('exportOverlay');
+            const prog = document.getElementById('exportProgress');
+            const msg = document.getElementById('exportStatusMsg');
+            const toast = document.getElementById('toast');
+            
+            overlay.style.display = 'flex';
+            prog.style.width = '0%';
+            
+            let time = 0;
+            const interval = setInterval(() => {
+                time += 100;
+                let pct = (time / 4000) * 100;
+                if (pct > 100) pct = 100;
+                prog.style.width = pct + '%';
+                
+                if (time === 1000) msg.textContent = 'Adding captions...';
+                if (time === 2000) msg.textContent = 'Mixing audio...';
+                if (time === 3000) msg.textContent = 'Finalising export...';
+                
+                if (time >= 4000) {
+                    clearInterval(interval);
+                    overlay.style.display = 'none';
+                    msg.textContent = 'Trimming video...'; // reset
+                    
+                    // Trigger download
+                    const vidUrl = document.getElementById('editorVideo').src;
+                    if (vidUrl) {
+                        const a = document.createElement('a');
+                        a.href = vidUrl;
+                        a.download = 'reel-export.mp4';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }
+                    
+                    // Show Toast
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                }
+            }, 100);
         }
     </script>
+    <style>
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
 </body>
 </html>
