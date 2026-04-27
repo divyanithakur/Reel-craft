@@ -38,7 +38,7 @@
                 <div style="color: white; font-size: 20px; font-weight: 700;">Drag and drop your video here</div>
                 <div class="muted" style="color: #7a7890;">or</div>
                 <button id="browseBtn" class="btn btn-primary" style="margin-top: 8px;">Browse files from computer</button>
-                <input type="file" id="fileInput" accept="video/*" style="display: none;">
+                <input type="file" id="fileInput" accept="video/mp4,video/quicktime,video/avi" style="display: none;">
             </div>
             
             <div id="progressSection" style="display: none; margin-bottom: 24px;">
@@ -76,18 +76,95 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
         lucide.createIcons();
-    </script>
-    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
-    <script>
-        const CLOUD_NAME = 'dbtdnh3eh'; const UPLOAD_PRESET = 'reelcraft_videos'; const browseBtn = document.getElementById('browseBtn'); const fileInput = document.getElementById('fileInput'); const dropZone = document.getElementById('dropZone'); const progressSection = document.getElementById('progressSection'); const progressBar = document.getElementById('progressBar'); const statusText = document.getElementById('statusText');
+
+        const _supabase = supabase.createClient(
+            'https://uqhsumymxsdzshxhsuma.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxaHN1bXlteHNkenNoeGhzdW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MTM1MzIsImV4cCI6MjA4OTk4OTUzMn0.uoIzMauVrGnNHoysnOD5dK20f0EAFanP9Jcf4GbycK0'
+        );
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await _supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+        });
+
+        const browseBtn = document.getElementById('browseBtn'); 
+        const fileInput = document.getElementById('fileInput'); 
+        const dropZone = document.getElementById('dropZone'); 
+        const progressSection = document.getElementById('progressSection'); 
+        const progressBar = document.getElementById('progressBar'); 
+        const statusText = document.getElementById('statusText');
+
         browseBtn.addEventListener('click', function() { fileInput.click(); });
         fileInput.addEventListener('change', function() { if (fileInput.files.length > 0) { uploadFile(fileInput.files[0]); } });
-        dropZone.addEventListener('dragover', function(e) { e.preventDefault(); dropZone.style.borderColor = '#7c3aed'; dropZone.style.background = 'rgba(124,58,237,0.1)'; });
-        dropZone.addEventListener('dragleave', function() { dropZone.style.borderColor = ''; dropZone.style.background = ''; });
-        dropZone.addEventListener('drop', function(e) { e.preventDefault(); dropZone.style.borderColor = ''; dropZone.style.background = ''; if (e.dataTransfer.files.length > 0) { uploadFile(e.dataTransfer.files[0]); } });
-        async function uploadFile(file) { if (!file.type.startsWith('video/')) { alert('Please upload a video file'); return; } if (file.size > 500 * 1024 * 1024) { alert('File size must be under 500MB'); return; } progressSection.style.display = 'block'; statusText.textContent = 'Uploading... 0%'; progressBar.style.width = '0%'; const formData = new FormData(); formData.append('file', file); formData.append('upload_preset', UPLOAD_PRESET); formData.append('cloud_name', CLOUD_NAME); const xhr = new XMLHttpRequest(); xhr.open('POST', 'https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/video/upload'); xhr.upload.onprogress = function(e) { if (e.lengthComputable) { const percent = Math.round((e.loaded / e.total) * 100); progressBar.style.width = percent + '%'; statusText.textContent = 'Uploading... ' + percent + '%'; } }; xhr.onload = function() { if (xhr.status === 200) { const response = JSON.parse(xhr.responseText); statusText.textContent = 'Upload complete! Redirecting to editor...'; progressBar.style.width = '100%'; progressBar.style.background = '#22c55e'; localStorage.setItem('uploadedVideoUrl', response.secure_url); localStorage.setItem('uploadedVideoPublicId', response.public_id); setTimeout(function() { window.location.href = 'editor.html'; }, 1500); } else { statusText.textContent = 'Upload failed. Please try again.'; progressBar.style.background = '#e24b4a'; } }; xhr.onerror = function() { statusText.textContent = 'Upload failed. Please check your connection.'; }; xhr.send(formData); }
+
+        dropZone.addEventListener('dragover', function(e) { 
+            e.preventDefault(); 
+            dropZone.style.borderColor = '#7c3aed'; 
+            dropZone.style.background = 'rgba(124,58,237,0.1)'; 
+        });
+
+        dropZone.addEventListener('dragleave', function() { 
+            dropZone.style.borderColor = ''; 
+            dropZone.style.background = ''; 
+        });
+
+        dropZone.addEventListener('drop', function(e) { 
+            e.preventDefault(); 
+            dropZone.style.borderColor = ''; 
+            dropZone.style.background = ''; 
+            if (e.dataTransfer.files.length > 0) { 
+                uploadFile(e.dataTransfer.files[0]); 
+            } 
+        });
+
+        async function uploadFile(file) { 
+            if (file.size > 500 * 1024 * 1024) { 
+                progressSection.style.display = 'block';
+                statusText.textContent = 'File too large. Maximum is 500MB.';
+                statusText.style.color = '#e24b4a';
+                progressBar.style.width = '0%';
+                return; 
+            } 
+            
+            progressSection.style.display = 'block'; 
+            statusText.textContent = `Uploading ${file.name} (${(file.size/(1024*1024)).toFixed(2)} MB)... please wait`; 
+            statusText.style.color = '#7a7890';
+            progressBar.style.width = '50%'; 
+            
+            const fileName = `${Date.now()}_${file.name}`;
+            const { data, error } = await _supabase.storage.from('reels').upload(fileName, file);
+
+            if (error) {
+                statusText.textContent = error.message;
+                statusText.style.color = '#e24b4a';
+                progressBar.style.background = '#e24b4a';
+            } else {
+                statusText.textContent = 'Upload complete! Redirecting to editor...';
+                statusText.style.color = '#22c55e';
+                progressBar.style.width = '100%';
+                progressBar.style.background = '#22c55e';
+                
+                // Read as base64 and store in sessionStorage as requested
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        sessionStorage.setItem('uploadedVideo', e.target.result);
+                    } catch (err) {
+                        console.warn("Could not save to sessionStorage (likely size limit). Using supabase URL instead.");
+                        const { data: { publicUrl } } = _supabase.storage.from('reels').getPublicUrl(fileName);
+                        sessionStorage.setItem('uploadedVideoUrl', publicUrl);
+                    }
+                    setTimeout(function() { window.location.href = 'editor.html'; }, 2000);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 </body>
 </html>

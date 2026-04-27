@@ -23,7 +23,10 @@
                 <li><a href="dashboard.html" class="active">Dashboard</a></li>
                 <li><a href="login.html">Log in</a></li>
             </ul>
-            <div class="user-avatar">RC</div>
+            <div style="display:flex; gap: 12px; align-items: center;">
+                <div class="user-avatar">RC</div>
+                <button onclick="doLogout()" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.9rem; border-color: #252531; background: transparent; color: white;">Logout</button>
+            </div>
         </div>
     </nav>
 
@@ -31,8 +34,8 @@
         <section class="welcome-section section reveal">
             <div class="container welcome-container" style="display: block;">
                 <div class="welcome-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <h1 style="font-size: 36px; margin-bottom: 0; text-align: left;">Welcome back, Creator!</h1>
-                    <button class="btn btn-primary">Create new Reel</button>
+                    <h1 id="welcome-heading" style="font-size: 36px; margin-bottom: 0; text-align: left;">Welcome back, Creator!</h1>
+                    <button class="btn btn-primary" onclick="window.location.href='upload.html'">Create new Reel</button>
                 </div>
                 <div class="export-status" style="text-align: left;">
                     <span class="muted">You have 3 exports remaining this month</span>
@@ -163,7 +166,7 @@
             <div class="container">
                 <h2 class="section-title-left">Quick actions</h2>
                 <div class="actions-grid">
-                    <div class="action-card">
+                    <div class="action-card" onclick="window.location.href='upload.html'" style="cursor: pointer;">
                         <div class="action-icon">
                             <i data-lucide="upload"></i>
                         </div>
@@ -207,8 +210,28 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
         lucide.createIcons();
+        const _supabase = supabase.createClient(
+            'https://uqhsumymxsdzshxhsuma.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxaHN1bXlteHNkenNoeGhzdW1hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0MTM1MzIsImV4cCI6MjA4OTk4OTUzMn0.uoIzMauVrGnNHoysnOD5dK20f0EAFanP9Jcf4GbycK0'
+        );
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await _supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            const userName = session.user.email;
+            document.getElementById('welcome-heading').textContent = `Welcome back, ${userName}!`;
+        });
+
+        async function doLogout() {
+            await _supabase.auth.signOut();
+            window.location.href = 'login.html';
+        }
     </script>
 </body>
 </html>

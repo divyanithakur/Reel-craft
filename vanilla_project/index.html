@@ -212,7 +212,7 @@
             <p class="subtitle">No editing skills needed. Upload your raw footage and let AI do the heavy lifting — captions, cuts, hooks and more.</p>
             <div class="hero-btns">
                 <a href="signup.html" class="btn btn-primary" id="startEditingBtn" style="display: inline-flex; padding: 16px 32px; font-size: 16px;">Start editing free</a>
-                <button class="btn btn-outline" style="padding: 16px 32px; font-size: 16px;">See how it works</button>
+                <button class="btn btn-outline" style="padding: 16px 32px; font-size: 16px;" onclick="document.getElementById('how-it-works').scrollIntoView({behavior: 'smooth'})">See how it works</button>
             </div>
 
             <div class="editor-preview">
@@ -305,7 +305,7 @@
         </div>
     </section>
 
-    <section class="how-it-works section reveal">
+    <section class="how-it-works section reveal" id="how-it-works">
         <div class="container">
             <div class="section-tag">HOW IT WORKS</div>
             <h2 class="section-title">3 simple steps</h2>
@@ -337,9 +337,9 @@
             <div class="logo">ReelCraft</div>
             <p class="footer-msg">Built for small creators. Free to start.</p>
             <div class="footer-links">
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">Contact</a>
+                <a href="#" onclick="alert('Privacy Policy coming soon!')">Privacy</a>
+                <a href="#" onclick="alert('Terms of Service coming soon!')">Terms</a>
+                <a href="#" onclick="alert('Contact us at support@reelcraft.app')">Contact</a>
             </div>
         </div>
     </footer>
